@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="robots" content="noindex,nofollow" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🤖</text></svg>">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+
+    {% for css in 'future tabs table'.split() %}
+    <link rel="stylesheet" href="/static/css/{{ css }}.css">
+    {% endfor %}
+
+    <title>GPT</title>
+</head>
+<nav>
+    <a home href="#">Home</a>
+    <a home href="#features">Features</a>
+    <a home href="#faq">FAQ</a>
+    <a home href="#donate">Donate</a>
+</nav>
+
+<body{{ ' class=' + body_class + '' if body_class else '' }}>
+<main>

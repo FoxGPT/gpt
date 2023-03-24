@@ -1,0 +1,25 @@
+@import '_vars'
+
+.tab-list
+    margin-top: 2rem
+    margin-bottom: 0.5rem
+
+    a
+        padding: 0.5rem
+        background: $bg-light
+        padding-right: 0.5rem
+        text-decoration: none
+        transition: background 0.2s
+
+        &:first-of-type
+            border-top-left-radius: 4px
+
+        &:last-of-type
+            border-top-right-radius: 4px
+            border-right: none
+
+        &:hover
+            background: $bg-light-ish
+
+        &.active
+            background: $bg-lighter

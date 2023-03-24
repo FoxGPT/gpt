@@ -1,0 +1,176 @@
+{% include 'components/top.html' %}
+
+<h1>Free GPT API</h1>
+<h2>Getting Started</h2>
+<p>Yep, you heard that right. It's <mark>completely free</mark> and you just need to change <mark>two lines of code</mark>!</p>
+
+<table>
+    <tr>
+        <th>Change...</th>
+        <th>To...</th>
+    </tr>
+    <tr>
+        <td>https://api.openai.com/...</td>
+        <td>https://gpt.bot.nu/...</td>
+    </tr>
+    <tr>
+        <td>openai.api_key = 'sk-...'</td>
+        <td>openai.api_key = ''</td>
+    </tr>
+</table>
+
+<h3>Basic examples</h3>
+<div class="tab-list">
+    {% for example in examples %}<a href="#{{ example.name }}" ondragstart="return false">{{ example.name }}</a>{% endfor %}
+</div>
+<div class="tab-content">
+    <span id="copy-button" title="Copy code to clipboard">
+        <i class="bi bi-clipboard"></i>
+    </span>
+    {% for example in examples %}
+    <div id="{{ example.name }}-tab"><pre><code class="language-{{ example.extension }}">{{ example.code }}</code></pre></div>
+    {% endfor %}
+</div>
+
+<h2 id="features">Features</h2>
+<p>Most of the main features of <a href="https://platform.openai.com/docs/api-reference" target="_blank">OpenAI's API</a> are supported.</p>
+<table>
+    <tr>
+        <th>Feature</th>
+        <th>Supported</th>
+    </tr>
+    <tr>
+        <td>Create completion</td>
+        <td>✅</td>
+    </tr>
+    <tr>
+        <td>Create chat completion</td>
+        <td>✅</td>
+    </tr>
+    <tr>
+        <td>List models</td>
+        <td>✅</td>
+    </tr>
+    <tr>
+        <td>Retrieve model</td>
+        <td>✅</td>
+    </tr>
+    <tr>
+        <td>Streaming</td>
+        <td>❌</td>
+    </tr>
+    <tr>
+        <td>GPT-4</td>
+        <td>❌</td>
+    </tr>
+</table>
+
+<h3 id="models">All publicly accessible models are supported:</h3>
+<table>
+    <tr>
+        <th>Model</th>
+        <th>Supported</th>
+    </tr>
+    <tr>
+        <td>text-ada-001</td>
+        <td>✅</td>
+    </tr>
+    <tr>
+        <td>text-babbage-001</td>
+        <td>✅</td>
+    </tr>
+    <tr>
+        <td>text-curie-001</td>
+        <td>✅</td>
+    </tr>
+    <tr>
+        <td>text-davinci-0034</td>
+        <td>✅</td>
+    </tr>
+</table>
+
+<h3>Chat</h3>
+<p>
+    You can learn more about how to use <a href="https://platform.openai.com/docs/api-reference/chat" target="_blank">OpenAI's chat completion API</a> here.
+</p>
+
+
+<h2 id="faq">Frequently Asked Questions</h2>
+<details>
+    <summary>Can I use the official Node.JS package for this, too?</summary>
+    <p>
+        Sadly, <a href="https://github.com/openai/openai-node/issues/53" target="_blank">OpenAI doesn't support custom endpoints</a>
+        in their package. You can use the fork <a href="https://www.npmjs.com/package/azure-openai" target="_blank">azure-openai</a>, though. 
+    </p>
+</details>
+
+<details>
+    <summary>Do you support/will you add [any feature]?</summary>
+    <p>
+        Just try it out and see if it works! If you want to suggest something, please contact me.
+    </p>
+</details>
+
+<details>
+    <summary>How is this free?</summary>
+    <p>
+        I'm paying for the server out of my own pocket. If you would like to support this project, please check out the <a href="#donate">donate</a> section.
+    </p>
+</details>
+
+<details>
+    <summary>Where is the documentation?</summary>
+    <p>
+        There is no documentation for this service, because it's based on OpenAI's API.
+        <br>
+        You can learn more about how to use <a href="https://platform.openai.com/docs/api-reference" target="_blank">OpenAI's API</a> here.
+    </p>
+</details>
+
+<details>
+    <summary>Does OpenAI know my IP?</summary>
+    <p>
+        No. The <code>user</code> parameter is completely randomized by default.
+    </p>
+</details>
+
+<details>
+    <summary>Do I need to provide any API key?</summary>
+    <p>
+        No. In the official <code>openai</code> Python library, set <code>api_key</code> to <code>''</code>. In the other libraries, just don't set it at all.
+    </p>
+</details>
+
+<details>
+    <summary>I get [...] error! How do I fix it?</summary>
+    <p>
+        If you get an error, please contact me.
+    </p>
+</details>
+
+<details>
+    <summary>Why is this not open source?</summary>
+    <p>
+        I don't want to get in legal trouble with OpenAI. I'm not sure if they would be okay with this, so I'm playing it safe.
+        If you want to see the source code, please contact me.
+    </p>
+</details>
+
+<h2 id="donate">Donate</h2>
+<p>
+    Thank you for using this service!
+    It's completely free and I don't plan on monetizing it in any way.
+    So if you would like to support this project, please consider donating to one of the following addresses:
+</p>
+
+<h3>Bitcoin (BTC)</h3>
+<code>bc1qzvkspkd8lp309xgnrvfuj3c9n3uuszyh6cd7d6q8y89h3ryzmcuqaxlpdy</code>
+<br><br>
+<img src="https://www.bitcoinqrcodemaker.com/qr/6ee4017edfbf2d34fa074f179efc6479/Your_Bitcoin_QR_Code.png" alt="Bitcoin QR Code" width="200px">
+
+<h3>Monero (XMR)</h3>
+<code>84f1cPKgUDug4dEfMNgLfhgxNPe8ehMHfiEB1km6G5sS3LqGzzoodmcdq8XP5y2ceMbLXVh7JUpANLQvyWruZpWnLAbXA72</code>
+<br><br>
+<img src="/static/img/xmr.png" alt="Monero QR Code" width="200px">
+
+{% include 'components/end.html' %}

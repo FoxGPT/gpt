@@ -1,0 +1,30 @@
+{
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/CVS": true,
+        "**/.DS_Store": true,
+        "**/Thumbs.db": true,
+        ".vscode": true,
+        "gpt/static/css/future.css.map": true,
+        "gpt/static/css/future.css": true,
+        "gpt/static/css/tabs.css": true,
+        "gpt/static/css/tabs.css.map": true,
+        "gpt/static/css/prism.css": true,
+        "gpt/static/css/prism.css.map": true,
+        "gpt/static/css/table.css": true,
+        "gpt/static/css/table.css.map": true
+    },
+    "hide-files.files": [
+        ".vscode",
+        "gpt/static/css/future.css.map",
+        "gpt/static/css/future.css",
+        "gpt/static/css/tabs.css",
+        "gpt/static/css/tabs.css.map",
+        "gpt/static/css/prism.css",
+        "gpt/static/css/prism.css.map",
+        "gpt/static/css/table.css",
+        "gpt/static/css/table.css.map"
+    ]
+}

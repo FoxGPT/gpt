@@ -1,0 +1,19 @@
+table {
+  text-align: left;
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
+  margin-bottom: 2rem;
+}
+table th {
+  font-weight: bold;
+  padding: 0.5rem;
+  border-bottom: 1px solid #858585;
+}
+table td {
+  padding: 0.5rem;
+  border-bottom: 1px solid #858585;
+}
+table tr:nth-child(even) {
+  background: #1b1721;
+}/*# sourceMappingURL=table.css.map */

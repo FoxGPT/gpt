@@ -1,0 +1,92 @@
+@import '_vars'
+@import 'https://rsms.me/inter/inter.css'
+@import 'https://fonts.cdnfonts.com/css/roboto-mono'
+
+html
+    scroll-behavior: smooth
+    scroll-margin-top: 5rem
+
+    *
+        color: $fg
+        box-sizing: border-box
+        font-family: $font
+
+    background: $bg
+
+h1
+    margin-top: 0
+    font-weight: 500
+
+h2, h3, h4, h5, h6
+    font-weight: 400
+
+mark
+    color: $accent-light
+    background: none
+
+p, li
+    line-height: 1.5
+
+code, pre *
+    font-family: 'Roboto Mono', monospace
+
+#copy-button
+    font-size: 24px
+    cursor: pointer
+    position: relative
+    top: -0.5rem
+    right: 1rem
+    float: right
+    background: $bg
+    padding: 5px
+    border-radius: 4px
+    border: 1px solid $fg-light
+    transition: background 0.2s ease
+
+    &:hover
+        background: $bg-lighter
+
+    .bi-clipboard-check
+        color: $green
+
+body
+    margin: 0
+    padding-block: 2rem
+    max-width: 700px
+    margin-inline: auto
+
+nav
+    max-width: 700px
+    margin-inline: auto
+    margin-bottom: 2rem
+
+    a
+        color: $accent-light
+        font-size: 22px
+        text-decoration: none
+        margin-right: 1rem
+
+        &:hover
+            text-decoration: underline
+
+footer
+    margin-top: 2rem
+    width: 100%
+    opacity: 0.5
+    font-weight: 300
+    text-align: center
+
+    a
+        color: $accent
+        text-decoration: none
+
+        &:hover
+            text-decoration: underline
+
+@media (max-width: 1000px)
+    nav
+        margin-bottom: 1rem
+
+    body
+        padding-block: 1rem
+        padding-inline: 1rem
