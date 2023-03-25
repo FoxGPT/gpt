@@ -1,4 +1,5 @@
 import os
+import json
 import httpx
 import random
 
@@ -7,6 +8,8 @@ load_dotenv()
 
 WORKING_FILE = os.getenv('WORKING_FILE')
 INVALID_FILE = os.getenv('INVALID_FILE')
+
+TAKE_LONG = []
 
 def parse_key(key: str) -> str:
     return f'sk-{key.replace(",", "T3BlbkFJ")}'
@@ -45,26 +48,43 @@ def invalidate_key(invalid_key: str) -> None:
         print(3, invalid_key)
         invalid.write(f'{unparse(invalid_key)}\n')
 
+def add_stat(key: str):
+    with open('stats.json', 'r') as stats_file:
+        stats = json.loads(stats_file.read())
+
+    with open('stats.json', 'w') as stats_file:
+        if not stats.get(key):
+            stats[key] = 0
+
+        stats[key] += 1
+        json.dump(stats, stats_file)
+
 def respond_to_request(request, path):
-    # open('log.txt', 'w').write(str(request.__dict__).replace(',', '\n'))
     params = request.args.copy()
     params.pop('request-method', None)
+
+    actual_path = path.replace('v1/', '')
+    add_stat('*')
+    add_stat(actual_path)
 
     while 1:
         key = get_key()
 
-        resp = httpx.request(
-            method=request.args.get('request-method', request.method),
-            url=f'https://api.openai.com/v1/{path.replace("v1/", "")}',
-            headers={
-                'Authorization': f'Bearer {key}',
-                'Content-Type': 'application/json'
-            },
-            data=request.data,
-            json=request.get_json(silent=True),
-            params=params,
-            timeout=30,
-        )
+        try:
+            resp = httpx.request(
+                method=request.args.get('request-method', request.method),
+                url=f'https://api.openai.com/v1/{actual_path}',
+                headers={
+                    'Authorization': f'Bearer {key}',
+                    'Content-Type': 'application/json'
+                },
+                data=request.data,
+                json=request.get_json(silent=True),
+                params=params,
+                timeout=30,
+            )
+        except httpx.ReadTimeout:
+            continue
         
         if not isinstance(resp, dict):
             resp = resp.json()
