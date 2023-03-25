@@ -5,7 +5,7 @@ nav {
   z-index: 500;
   position: fixed;
   padding-block: 1.5rem;
-  background: rgba(5, 5, 5, 0.8274509804);
+  background: rgba(8, 6, 12, 0.9176470588);
   border-bottom: 1px solid rgba(194, 194, 194, 0.231372549);
 }
 nav div.content {
@@ -35,6 +35,9 @@ nav a {
 }
 nav a:hover {
   opacity: 1;
+}
+nav a.active {
+  font-weight: bold;
 }
 nav div.mobile-nav {
   display: none;

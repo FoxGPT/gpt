@@ -1,5 +1,13 @@
 @import '_vars'
 
+@keyframes gradient-rotate
+    0%
+        background-position: 0% 50%
+    50%
+        background-position: 100% 50%
+    100%
+        background-position: 0% 50%
+
 section.landing
     padding-top: 5rem
     min-height: 100vh
@@ -10,7 +18,6 @@ section.landing
         font-size: 100px
         font-weight: 800
         margin-bottom: 2rem
-        user-select: none
 
         .gradient
             background: $gradient
@@ -36,6 +43,8 @@ section.landing
             border-radius: 4px
             background: $gradient
             transform: translateY(-2px)
+            background-size: 400% 400%
+            animation: gradient-rotate 2s ease infinite
 
             button
                 background: $bg
@@ -62,8 +71,36 @@ section.landing
             opacity: 0.03
             filter: invert(1)
 
+    div.blend
+        height: 300px
+
+        position: absolute
+        top: 200px
+        right: 2rem
+        z-index: -1
+
+        border-radius: 4px
+        // background: $gradient
+        filter: brightness(0.7)
+        // box-shadow: 0 10px 30px black
+
+        background-size: 400% 400%
+        animation: gradient-rotate 5s ease infinite
+
+        p
+            text-align: right
+            margin-right: 0.5rem
+
+        img.tutorial
+            height: 300px
+
+            border-radius: 4px
+            z-index: -1
+            user-select: none
+            // border: 2px solid $fg-light
+
     div.stats
-        margin-block: 8rem
+        margin-top: 8rem
         display: flex
         justify-content: space-between
 
@@ -86,6 +123,10 @@ section.landing
                 display: block
 
                 opacity: 0.8
+
+@media (max-width: 1600px)
+    div.blend
+        display: none
 
 @media (max-width: 1000px)
     section.landing

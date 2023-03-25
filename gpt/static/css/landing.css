@@ -1,3 +1,14 @@
+@keyframes gradient-rotate {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
 section.landing {
   padding-top: 5rem;
   min-height: 100vh;
@@ -7,12 +18,9 @@ section.landing h1 {
   font-size: 100px;
   font-weight: 800;
   margin-bottom: 2rem;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-          user-select: none;
 }
 section.landing h1 .gradient {
-  background: linear-gradient(90deg, #fa2c08 0%, #ff0eb1 41%, #4837c9 100%);
+  background: linear-gradient(90deg, #fa2c08 0%, #ff0eb1 50%, #4837c9 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -35,11 +43,13 @@ section.landing div.buttons div.border {
   width: fit-content;
   padding: 2px;
   border-radius: 4px;
-  background: linear-gradient(90deg, #fa2c08 0%, #ff0eb1 41%, #4837c9 100%);
+  background: linear-gradient(90deg, #fa2c08 0%, #ff0eb1 50%, #4837c9 100%);
   transform: translateY(-2px);
+  background-size: 400% 400%;
+  animation: gradient-rotate 2s ease infinite;
 }
 section.landing div.buttons div.border button {
-  background: #050505;
+  background: #08060c;
 }
 section.landing div.buttons button {
   font-size: 20px;
@@ -64,8 +74,31 @@ section.landing div.crop img.pattern {
   opacity: 0.03;
   filter: invert(1);
 }
+section.landing div.blend {
+  height: 300px;
+  position: absolute;
+  top: 200px;
+  right: 2rem;
+  z-index: -1;
+  border-radius: 4px;
+  filter: brightness(0.7);
+  background-size: 400% 400%;
+  animation: gradient-rotate 5s ease infinite;
+}
+section.landing div.blend p {
+  text-align: right;
+  margin-right: 0.5rem;
+}
+section.landing div.blend img.tutorial {
+  height: 300px;
+  border-radius: 4px;
+  z-index: -1;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+}
 section.landing div.stats {
-  margin-block: 8rem;
+  margin-top: 8rem;
   display: flex;
   justify-content: space-between;
 }
@@ -89,6 +122,11 @@ section.landing div.stats div.stat svg {
   opacity: 0.8;
 }
 
+@media (max-width: 1600px) {
+  div.blend {
+    display: none;
+  }
+}
 @media (max-width: 1000px) {
   section.landing {
     padding-top: 0;
@@ -128,7 +166,7 @@ section.landing div.stats div.stat svg {
   position: relative;
   font-size: 24px;
   cursor: pointer;
-  background: #050505;
+  background: #08060c;
   border-radius: 4px;
   border: 1px solid rgba(194, 194, 194, 0.231372549);
   transition: background 0.2s ease;

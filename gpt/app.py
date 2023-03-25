@@ -66,7 +66,7 @@ def after_request(response):
 
 @app.route('/')
 def index():
-    return flask.render_template('index.html', examples=get_examples(), rate_limits=RATE_LIMITS, stats=get_stats())
+    return flask.render_template('index.html', examples=get_examples(), rate_limits=RATE_LIMITS, stats=get_stats(), title='Home')
 
 @app.route('/<path:subpath>', methods=ALL_METHODS)
 def api_proxy(subpath):
@@ -95,11 +95,11 @@ def favcion():
 
 @app.route('/donate')
 def donate_view():
-    return flask.render_template('donate.html')
+    return flask.render_template('donate.html', title='Donate')
 
 @app.route('/playground/images')
 def playground_view():
-    return flask.render_template('playground-images.html')
+    return flask.render_template('playground-images.html', title='Playground')
 
 @app.route('/playground/api/image')
 @limiter.limit('5 per minute')

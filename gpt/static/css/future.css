@@ -2,10 +2,10 @@
 @import 'https://fonts.cdnfonts.com/css/roboto-mono';
 html {
   scroll-behavior: smooth;
-  background: #050505;
+  background: #08060c;
 }
 html * {
-  scroll-margin-top: 5rem;
+  scroll-margin-top: 6rem;
   color: #f9f6f6;
   box-sizing: border-box;
   font-family: "Inter", sans-serif;
@@ -26,7 +26,7 @@ h3 {
 }
 
 h2, h3, h4, h5, h6 {
-  font-weight: 400;
+  font-weight: 800;
 }
 
 mark {
@@ -65,7 +65,7 @@ button {
   border-radius: 4px;
   padding: 0.5rem 1rem;
   font-size: 16px;
-  background: linear-gradient(90deg, #fa2c08 0%, #ff0eb1 41%, #4837c9 100%);
+  background: linear-gradient(90deg, #fa2c08 0%, #ff0eb1 50%, #4837c9 100%);
   background-size: 400% 400%;
   animation: gradient 5s ease infinite;
 }
@@ -109,11 +109,11 @@ svg.loading {
 }
 
 *::-moz-selection {
-  color: #050505;
+  color: #08060c;
   background: #fe92e7;
 }
 
 *::selection {
-  color: #050505;
+  color: #08060c;
   background: #fe92e7;
 }/*# sourceMappingURL=future.css.map */

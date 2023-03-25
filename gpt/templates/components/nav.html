@@ -1,17 +1,16 @@
 <nav>
     <div class="content">
-        <a href="/#">Home</a>
+        <a href="/#" class="{{ 'active' if title == 'Home' else '' }}">Home</a>
         <a href="/#examples">Examples</a>
         <a href="/#features">Features</a>
         <a href="/#faq">FAQ</a>
 
         <div class="right">
-            <a href="https://discord.gg/SCymptZmUK" target="_blank">
-                Help
-                <i class="bi bi-arrow-up-short"></i>
-            </a>
             <a href="/donate">
                 Donate
+            </a>
+            <a href="https://discord.gg/SCymptZmUK" target="_blank">
+                Help (Discord)
                 <i class="bi bi-arrow-up-short"></i>
             </a>
         </div>
