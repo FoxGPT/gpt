@@ -1,25 +1,51 @@
 {% include 'components/top.html' %}
 
 <h1>Free GPT API</h1>
-<h2>Getting Started</h2>
-<p>Yep, you heard that right. It's <mark>completely free</mark> and you just need to change <mark>two lines of code</mark>!</p>
+<p>
+    No fees. No ads, no scams. No registration. No API keys. Not sending your IP to OpenAI.
+    <br>
+    <i>Sounds too good to be true? <a href="https://reqbin.com/c-hpb4z8lq" target="_blank">See for yourself!</a></i>
+</p>
 
+<p>
+    <b>ANNOUNCEMENT - 25th of March 2023 - 03:35 AM UTC+1</b>
+    <blockquote>
+        When I wake up, I'll be working on web UIs based on this project! You'll soon be able to use ChatGPT's full potential, including image generation and more! 
+    </blockquote>
+</p>
+
+<h2>Getting Started</h2>
+
+<h3>In your script:</h3>
 <table>
     <tr>
         <th>Change...</th>
         <th>To...</th>
     </tr>
     <tr>
-        <td>https://api.openai.com/...</td>
-        <td>https://gpt.bot.nu/...</td>
-    </tr>
-    <tr>
-        <td>openai.api_key = 'sk-...'</td>
-        <td>openai.api_key = ''</td>
+        <td><code>https://api.openai.com/...</code></td>
+        <td><code>https://gpt.bot.nu/...</code></td>
     </tr>
 </table>
+<h3>In Python:</h3>
+<table>
+    <tr>
+        <th>Change...</th>
+        <th>To...</th>
+    </tr>
+    <tr>
+        <td><code>openai.api_key = 'sk-...'</code></td>
+        <td><code>openai.api_key = 'free'</code></td>
+    </tr>
+</table>
+    
+<p>
+    After that, add the line <code>openai.api_base = 'https://gpt.bot.nu'</code>
+</p>
 
-<h3>Basic examples</h3>
+<p>And you should be good to go!</p>
+
+<h2 id="examples">Basic examples</h2>
 <div class="tab-list">
     {% for example in examples %}<a href="#{{ example.name }}" ondragstart="return false">{{ example.name }}</a>{% endfor %}
 </div>
@@ -48,6 +74,10 @@
         <td>✅</td>
     </tr>
     <tr>
+        <td>Edits</td>
+        <td>✅</td>
+    </tr>
+    <tr>
         <td>List models</td>
         <td>✅</td>
     </tr>
@@ -56,12 +86,24 @@
         <td>✅</td>
     </tr>
     <tr>
+        <td>Image generation</td>
+        <td>✅</td>
+    </tr>
+    <tr>
+        <td>Embeddings</td>
+        <td>✅</td>
+    </tr>
+    <tr>
+        <td>Audio transcriptions</td>
+        <td>❌ (coming soon!)</td>
+    </tr>
+    <tr>
         <td>Streaming</td>
-        <td>❌</td>
+        <td>❌ (maybe coming soon)</td>
     </tr>
     <tr>
         <td>GPT-4</td>
-        <td>❌</td>
+        <td>❌ (unlikely, but perhaps...)</td>
     </tr>
 </table>
 
@@ -96,6 +138,7 @@
 
 
 <h2 id="faq">Frequently Asked Questions</h2>
+<h3>Features</h3>
 <details>
     <summary>Can I use the official Node.JS package for this, too?</summary>
     <p>
@@ -109,8 +152,26 @@
     <p>
         Just try it out and see if it works! If you want to suggest something, please contact me.
     </p>
+    
 </details>
 
+<details>
+    <summary>I get [any error]! How do I fix it?</summary>
+    <p>
+        If you get an error, please contact me. Make sure you copied the code from the example and followed all steps.
+    </p>
+</details>
+
+<details>
+    <summary>Where can I find the documentation?</summary>
+    <p>
+        There is no documentation for this service, because it's based on OpenAI's API.
+        <br>
+        You can learn more about how to use <a href="https://platform.openai.com/docs/api-reference" target="_blank">OpenAI's API</a> here.
+    </p>
+</details>
+
+<h3>General</h3>
 <details>
     <summary>How is this free?</summary>
     <p>
@@ -119,11 +180,9 @@
 </details>
 
 <details>
-    <summary>Where is the documentation?</summary>
+    <summary>Does you collect my ChatGPT/OpenAI session token/API key?</summary>
     <p>
-        There is no documentation for this service, because it's based on OpenAI's API.
-        <br>
-        You can learn more about how to use <a href="https://platform.openai.com/docs/api-reference" target="_blank">OpenAI's API</a> here.
+        No. It's not even possible for me to do that, unless you leave your OpenAI key in <code>openai.api_key</code> or send it otherwise in the API request.
     </p>
 </details>
 
@@ -138,13 +197,6 @@
     <summary>Do I need to provide any API key?</summary>
     <p>
         No. In the official <code>openai</code> Python library, set <code>api_key</code> to <code>''</code>. In the other libraries, just don't set it at all.
-    </p>
-</details>
-
-<details>
-    <summary>I get [...] error! How do I fix it?</summary>
-    <p>
-        If you get an error, please contact me.
     </p>
 </details>
 

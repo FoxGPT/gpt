@@ -1,4 +1,24 @@
 @import '_vars'
 
 details
+    background: $bg-light
+    border-radius: 5px
+    margin-bottom: 1rem
 
+summary
+    cursor: pointer
+    font-weight: bold
+    padding: 0.6rem 1rem
+
+details[open]
+    padding: 0.6rem 1rem 0.75rem 1rem
+
+details[open] summary+*
+    margin-top: 0
+
+details[open] summary
+    margin-bottom: 0.5rem
+    padding: 0
+
+details[open]>*:last-child 
+    margin-bottom: 0

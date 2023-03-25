@@ -4,8 +4,10 @@
 
 import openai
 
-openai.api_key = '' # leave this empty
+openai.api_key = '' # leave this empty or set it to anything
 openai.api_base = 'https://gpt.bot.nu' # really important
+
+# use the OpenAI API like you normally would
 
 completion = openai.Completion.create(
     engine='text-davinci-003',
