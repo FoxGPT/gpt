@@ -14,7 +14,10 @@
         "gpt/static/css/prism.css": true,
         "gpt/static/css/prism.css.map": true,
         "gpt/static/css/table.css": true,
-        "gpt/static/css/table.css.map": true
+        "gpt/static/css/table.css.map": true,
+        "gpt/__pycache__": true,
+        "gpt/static/css/faq.css": true,
+        "gpt/static/css/faq.css.map": true
     },
     "hide-files.files": [
         ".vscode",
@@ -25,6 +28,9 @@
         "gpt/static/css/prism.css",
         "gpt/static/css/prism.css.map",
         "gpt/static/css/table.css",
-        "gpt/static/css/table.css.map"
+        "gpt/static/css/table.css.map",
+        "gpt/__pycache__",
+        "gpt/static/css/faq.css",
+        "gpt/static/css/faq.css.map"
     ]
 }
