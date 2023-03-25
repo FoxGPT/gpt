@@ -21,7 +21,7 @@ def get_key() -> str:
     with open(WORKING_FILE, encoding='utf8') as keys_file:
         keys = keys_file.read().splitlines()
 
-    while 1:
+    while True:
         key = random.choice(keys)
 
         if ',' in key and not key.startswith('#'):
@@ -67,7 +67,7 @@ def respond_to_request(request, path):
     add_stat('*')
     add_stat(actual_path)
 
-    while 1:
+    while True:
         key = get_key()
 
         try:
