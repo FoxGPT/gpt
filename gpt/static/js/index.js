@@ -37,25 +37,6 @@ document.addEventListener('DOMContentLoaded', function () {
         navigator.clipboard.writeText(code);
     });
 
-    // counter
-    // find all elements starting with stats-
-    function updateCounter() {
-        var stats = document.querySelectorAll('[id^="stats-"]');
-
-        // for each element, get the id and use it to get the value from the API
-        stats.forEach(function (stat) {
-            var id = stat.id;
-            var url = '/stats/' + id.replace('stats-', '');
-            fetch(url)
-                .then(function (response) {
-                    return response.json();
-                })
-                .then(function (data) {
-                    document.getElementById(id).innerText = data.value;
-                });
-        });
-    };
-
     updateCounter();
-    setInterval(updateCounter, 1000);
+    // setInterval(updateCounter, 5000);
 });

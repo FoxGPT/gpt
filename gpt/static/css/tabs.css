@@ -1,6 +1,6 @@
 .tab-list {
+  display: flex;
   margin-top: 2rem;
-  margin-bottom: 0.5rem;
 }
 .tab-list a {
   padding: 0.5rem;

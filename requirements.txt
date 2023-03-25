@@ -1,3 +1,5 @@
 flask
 httpx
+openai
+flask-limiter
 python-dotenv

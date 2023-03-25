@@ -34,8 +34,6 @@ def invalidate_key(invalid_key: str) -> None:
     with open(WORKING_FILE, 'w') as empty:
         empty.write('')
 
-    print(lines)
-
     with open(WORKING_FILE, 'a') as working:
         line_count = 0
         for line in lines:
@@ -45,7 +43,6 @@ def invalidate_key(invalid_key: str) -> None:
                 line_count += 1
 
     with open(INVALID_FILE, 'a') as invalid:
-        print(3, invalid_key)
         invalid.write(f'{unparse(invalid_key)}\n')
 
 def add_stat(key: str):
@@ -59,13 +56,15 @@ def add_stat(key: str):
         stats[key] += 1
         json.dump(stats, stats_file)
 
-def respond_to_request(request, path):
+def proxy_api(request, path):
     params = request.args.copy()
     params.pop('request-method', None)
 
     actual_path = path.replace('v1/', '')
-    add_stat('*')
-    add_stat(actual_path)
+
+    if '/' in actual_path:
+        add_stat('*')
+        add_stat(actual_path)
 
     while True:
         key = get_key()

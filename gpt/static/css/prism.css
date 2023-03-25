@@ -18,6 +18,7 @@ code[class*=language-], pre[class*=language-] {
 }
 
 pre[class*=language-] {
+  width: 100%;
   padding: 1rem;
   margin: 0 0;
   overflow: auto;

@@ -33,12 +33,18 @@ code, pre * {
   font-family: "Roboto Mono", monospace;
 }
 
+code {
+  word-wrap: normal;
+  word-break: break-all;
+  white-space: normal;
+}
+
 #copy-button {
   font-size: 24px;
   cursor: pointer;
   position: relative;
-  top: -0.5rem;
-  right: 1rem;
+  top: -5rem;
+  right: 0.5rem;
   float: right;
   background: #130f18;
   padding: 5px;
@@ -98,4 +104,19 @@ footer a:hover {
     padding-block: 1rem;
     padding-inline: 1rem;
   }
+}
+input {
+  width: 100%;
+  font-size: 16px;
+  border: 0;
+  border-radius: 5px;
+  padding: 0.5rem;
+  color: #f9f6f6;
+  background: #1b1721;
+  outline: none;
+  margin-bottom: 1rem;
+}
+
+svg.loading {
+  filter: invert(1);
 }/*# sourceMappingURL=future.css.map */

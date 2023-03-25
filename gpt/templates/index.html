@@ -7,13 +7,6 @@
     <i>Sounds too good to be true? <a href="https://reqbin.com/c-hpb4z8lq" target="_blank">See for yourself!</a></i>
 </p>
 
-<p>
-    <b>ANNOUNCEMENT - 25th of March 2023 - 03:35 AM UTC+1</b>
-    <blockquote>
-        When I wake up, I'll be working on web UIs based on this project! You'll soon be able to use ChatGPT's full potential, including image generation and more! 
-    </blockquote>
-</p>
-
 <h2>Stats</h2>
 <table>
     <tr>
@@ -22,21 +15,22 @@
     </tr>
     <tr>
         <td>Total API usage</td>
-        <td><span id="stats-*">?</td>
+        <td>{{ stats.total }}</td>
     </tr>
     <tr>
-        <td>Chat completions</td>
-        <td><span id="stats-chat--completions">?</td>
+        <td>GPT-3.5 Turbo Chat Messages</td>
+        <td>{{ stats.chat }}</td>
     </tr>
     <tr>
-        <td>GPT-3 completions</td>
-        <td><span id="stats-engines--text-davinci-003--completions">?</td>
+        <td>GPT-3 Completions</td>
+        <td>{{ stats.completions }}</td>
     </tr>
     <tr>
-        <td>DALL-E Image generation</td>
-        <td><span id="stats-images--generations">?</td>
+        <td>DALL-E Images Generated</td>
+        <td>{{ stats.images }}</td>
     </tr>
 </table>
+<p>...And all that for free!</p>
 
 <h2>Getting Started</h2>
 
@@ -69,25 +63,25 @@
 
 <p>And you should be good to go!</p>
 
-<h2 id="examples">Basic examples</h2>
+<h2 id="examples">Basic Examples</h2>
 <div class="tab-list">
     {% for example in examples %}<a href="#{{ example.name }}" ondragstart="return false">{{ example.name }}</a>{% endfor %}
 </div>
 <div class="tab-content">
-    <span id="copy-button" title="Copy code to clipboard">
-        <i class="bi bi-clipboard"></i>
-    </span>
     {% for example in examples %}
     <div id="{{ example.name }}-tab"><pre><code class="language-{{ example.extension }}">{{ example.code }}</code></pre></div>
     {% endfor %}
 </div>
+<span id="copy-button" title="Copy code to clipboard">
+    <i class="bi bi-clipboard"></i>
+</span>
 
 <h2 id="features">Features</h2>
 <p>Most of the main features of <a href="https://platform.openai.com/docs/api-reference" target="_blank">OpenAI's API</a> are supported.</p>
 <table>
     <tr>
         <th>Feature</th>
-        <th>Supported</th>
+        <th>gpt.bot.nu</th>
     </tr>
     <tr>
         <td>Create completion</td>
@@ -118,12 +112,16 @@
         <td>✅</td>
     </tr>
     <tr>
+        <td>Moderation</td>
+        <td>✅</td>
+    </tr>
+    <tr>
         <td>Audio transcriptions</td>
-        <td>❌ (coming soon!)</td>
+        <td>❌ (maybe coming soon?)</td>
     </tr>
     <tr>
         <td>Streaming</td>
-        <td>❌ (maybe coming soon)</td>
+        <td>❌ (hopefully coming soon!)</td>
     </tr>
     <tr>
         <td>GPT-4</td>
@@ -135,7 +133,7 @@
 <table>
     <tr>
         <th>Model</th>
-        <th>Supported</th>
+        <th>gpt.bot.nu</th>
     </tr>
     <tr>
         <td>text-ada-001</td>
@@ -153,6 +151,22 @@
         <td>text-davinci-0034</td>
         <td>✅</td>
     </tr>
+    <tr>
+        <td>gpt-4</td>
+        <td>❌</td>
+    </tr>
+    <tr>
+        <td>gpt-4-0314</td>
+        <td>❌</td>
+    </tr>
+    <tr>
+        <td>gpt-4-32k</td>
+        <td>❌</td>
+    </tr>
+    <tr>
+        <td>gpt-4-32k-0314</td>
+        <td>❌</td>
+    </tr>
 </table>
 
 <h3>Chat</h3>
@@ -160,6 +174,12 @@
     You can learn more about how to use <a href="https://platform.openai.com/docs/api-reference/chat" target="_blank">OpenAI's chat completion API</a> here.
 </p>
 
+<h2 id="rate-limits">Rate Limits</h2>
+<ul>
+{% for rate_limit in rate_limits %}
+    <li>{{ rate_limit }}</li>
+{% endfor %}
+</ul>
 
 <h2 id="faq">Frequently Asked Questions</h2>
 <h3>Features</h3>
@@ -223,22 +243,5 @@
         No. In the official <code>openai</code> Python library, set <code>api_key</code> to <code>''</code>. In the other libraries, just don't set it at all.
     </p>
 </details>
-
-<h2 id="donate">Donate</h2>
-<p>
-    Thank you for using this service!
-    It's completely free and I don't plan on monetizing it in any way.
-    So if you would like to support this project, please consider donating to one of the following addresses:
-</p>
-
-<h3>Bitcoin (BTC)</h3>
-<code>bc1qzvkspkd8lp309xgnrvfuj3c9n3uuszyh6cd7d6q8y89h3ryzmcuqaxlpdy</code>
-<br><br>
-<img src="/static/img/btc.png" alt="Bitcoin QR Code" width="200px">
-
-<h3>Monero (XMR)</h3>
-<code>84f1cPKgUDug4dEfMNgLfhgxNPe8ehMHfiEB1km6G5sS3LqGzzoodmcdq8XP5y2ceMbLXVh7JUpANLQvyWruZpWnLAbXA72</code>
-<br><br>
-<img src="/static/img/xmr.png" alt="Monero QR Code" width="200px">
 
 {% include 'components/end.html' %}
