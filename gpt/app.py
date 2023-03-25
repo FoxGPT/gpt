@@ -51,10 +51,18 @@ def get_stats():
     stats = {
         'total': stats['*'],
         'chat': stats['chat/completions'] + stats['engines/gpt-3.5-turbo/chat/completions'],
-        'completions': stats['engines/text-davinci-003/completions'],
-        'images': stats['images/generations'],
+        'text': stats['engines/text-davinci-003/completions'],
+        'image': stats['images/generations'],
     }
     return stats
+
+@app.after_request
+def after_request(response):
+    # response.headers.add('Access-Control-Allow-Origin', '*')
+    # response.headers.add('Access-Control-Allow-Headers', 'Content-Type, Authorization')
+    # response.headers.add('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE, OPTIONS')
+
+    return response
 
 @app.route('/')
 def index():
@@ -84,6 +92,10 @@ def robots():
 @app.route('/favicon.ico')
 def favcion():
     return flask.Response('', mimetype='image/x-icon')
+
+@app.route('/donate')
+def donate_view():
+    return flask.render_template('donate.html')
 
 @app.route('/playground/images')
 def playground_view():

@@ -17,7 +17,13 @@
         "gpt/static/css/table.css.map": true,
         "gpt/__pycache__": true,
         "gpt/static/css/faq.css": true,
-        "gpt/static/css/faq.css.map": true
+        "gpt/static/css/faq.css.map": true,
+        "gpt/static/css/nav.css.map": true,
+        "gpt/static/css/nav.css": true,
+        "gpt/static/css/responsive.css": true,
+        "gpt/static/css/responsive.css.map": true,
+        "gpt/static/css/landing.css": true,
+        "gpt/static/css/landing.css.map": true
     },
     "hide-files.files": [
         ".vscode",
@@ -31,6 +37,12 @@
         "gpt/static/css/table.css.map",
         "gpt/__pycache__",
         "gpt/static/css/faq.css",
-        "gpt/static/css/faq.css.map"
+        "gpt/static/css/faq.css.map",
+        "gpt/static/css/nav.css.map",
+        "gpt/static/css/nav.css",
+        "gpt/static/css/responsive.css",
+        "gpt/static/css/responsive.css.map",
+        "gpt/static/css/landing.css",
+        "gpt/static/css/landing.css.map"
     ]
 }

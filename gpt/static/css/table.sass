@@ -1,21 +1,24 @@
 @import '_vars'
 
 table
-    text-align: left
-    border-collapse: collapse
-    border-spacing: 0
     width: 100%
+    text-align: left
+    border-spacing: 0
     margin-bottom: 2rem
+    border-collapse: collapse
 
     th
-        font-weight: bold
         padding: 0.5rem
-        border-bottom: 1px solid $fg-light
+
+        font-weight: bold
+        background: $bg-lighter
 
     td
         padding: 0.5rem
-        border-bottom: 1px solid $fg-light
 
     tr
         &:nth-child(even)
             background: $bg-light
+
+        &.total
+            font-weight: bold

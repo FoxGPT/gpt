@@ -1,0 +1,141 @@
+section.landing {
+  padding-top: 5rem;
+  min-height: 100vh;
+  text-align: center;
+}
+section.landing h1 {
+  font-size: 100px;
+  font-weight: 800;
+  margin-bottom: 2rem;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+}
+section.landing h1 .gradient {
+  background: linear-gradient(90deg, #fa2c08 0%, #ff0eb1 41%, #4837c9 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+section.landing .subtitle {
+  opacity: 0.8;
+  margin-bottom: 4rem;
+}
+section.landing div.buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+}
+section.landing div.buttons > a {
+  width: -moz-fit-content;
+  width: fit-content;
+  text-decoration: none;
+}
+section.landing div.buttons div.border {
+  width: -moz-fit-content;
+  width: fit-content;
+  padding: 2px;
+  border-radius: 4px;
+  background: linear-gradient(90deg, #fa2c08 0%, #ff0eb1 41%, #4837c9 100%);
+  transform: translateY(-2px);
+}
+section.landing div.buttons div.border button {
+  background: #050505;
+}
+section.landing div.buttons button {
+  font-size: 20px;
+  padding: 1rem 2rem;
+  transition: 0.3s;
+}
+section.landing div.buttons button:hover {
+  opacity: 0.9;
+}
+section.landing div.crop {
+  position: absolute;
+  top: 0;
+  left: -400px;
+}
+section.landing div.crop img.pattern {
+  z-index: -1;
+  width: 800px;
+  height: 800px;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+  opacity: 0.03;
+  filter: invert(1);
+}
+section.landing div.stats {
+  margin-block: 8rem;
+  display: flex;
+  justify-content: space-between;
+}
+section.landing div.stats div.stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+section.landing div.stats div.stat span.number {
+  font-size: 36px;
+  margin-block: 1rem;
+  font-weight: 800;
+}
+section.landing div.stats div.stat span.label {
+  opacity: 0.7;
+}
+section.landing div.stats div.stat svg {
+  height: 40px;
+  width: 40px;
+  display: block;
+  opacity: 0.8;
+}
+
+@media (max-width: 1000px) {
+  section.landing {
+    padding-top: 0;
+  }
+  section.landing h1 {
+    font-size: 60px;
+  }
+  section.landing div.buttons {
+    gap: 1rem;
+    align-items: center;
+    flex-direction: column;
+  }
+  section.landing div.crop {
+    top: -100px;
+    left: -200px;
+  }
+  section.landing div.crop img.pattern {
+    width: 400px;
+    height: 400px;
+  }
+  section.landing div.stats {
+    margin-top: 4rem;
+    width: 100%;
+  }
+  section.landing div.stats div.stat {
+    margin-block: 3rem;
+  }
+  section.landing div.stats, section.landing div.stats * {
+    display: block;
+  }
+}
+#copy-button {
+  top: -5rem;
+  right: 0.5rem;
+  float: right;
+  padding: 5px;
+  position: relative;
+  font-size: 24px;
+  cursor: pointer;
+  background: #050505;
+  border-radius: 4px;
+  border: 1px solid rgba(194, 194, 194, 0.231372549);
+  transition: background 0.2s ease;
+}
+#copy-button:hover {
+  background: #471f4f;
+}
+#copy-button .bi-clipboard-check {
+  color: #5de20b;
+}/*# sourceMappingURL=landing.css.map */

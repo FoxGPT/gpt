@@ -1,19 +1,21 @@
 table {
-  text-align: left;
-  border-collapse: collapse;
-  border-spacing: 0;
   width: 100%;
+  text-align: left;
+  border-spacing: 0;
   margin-bottom: 2rem;
+  border-collapse: collapse;
 }
 table th {
-  font-weight: bold;
   padding: 0.5rem;
-  border-bottom: 1px solid #858585;
+  font-weight: bold;
+  background: #471f4f;
 }
 table td {
   padding: 0.5rem;
-  border-bottom: 1px solid #858585;
 }
 table tr:nth-child(even) {
-  background: #1b1721;
+  background: rgba(20, 19, 23, 0.8470588235);
+}
+table tr.total {
+  font-weight: bold;
 }/*# sourceMappingURL=table.css.map */

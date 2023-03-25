@@ -1,0 +1,138 @@
+@import '_vars'
+
+section.landing
+    padding-top: 5rem
+    min-height: 100vh
+
+    text-align: center
+
+    h1
+        font-size: 100px
+        font-weight: 800
+        margin-bottom: 2rem
+        user-select: none
+
+        .gradient
+            background: $gradient
+            -webkit-background-clip: text
+            -webkit-text-fill-color: transparent
+
+    .subtitle
+        opacity: 0.8
+        margin-bottom: 4rem
+
+    div.buttons
+        display: flex        
+        justify-content: center
+        gap: 1.5rem
+
+        >a
+            width: fit-content
+            text-decoration: none
+
+        div.border
+            width: fit-content
+            padding: 2px
+            border-radius: 4px
+            background: $gradient
+            transform: translateY(-2px)
+
+            button
+                background: $bg
+
+        button
+            font-size: 20px
+            padding: 1rem 2rem
+            transition: 0.3s
+
+            &:hover
+                opacity: 0.9
+
+    div.crop
+        position: absolute
+        top: 0
+        left: -400px
+
+        img.pattern
+            z-index: -1
+            width: 800px
+            height: 800px
+            user-select: none
+
+            opacity: 0.03
+            filter: invert(1)
+
+    div.stats
+        margin-block: 8rem
+        display: flex
+        justify-content: space-between
+
+        div.stat
+            display: flex
+            flex-direction: column
+            align-items: center
+
+            span.number
+                font-size: 36px
+                margin-block: 1rem
+                font-weight: 800
+
+            span.label
+                opacity: 0.7
+
+            svg
+                height: 40px
+                width: 40px
+                display: block
+
+                opacity: 0.8
+
+@media (max-width: 1000px)
+    section.landing
+        padding-top: 0
+
+        h1
+            font-size: 60px
+
+        div.buttons
+            gap: 1rem
+            align-items: center
+            flex-direction: column
+
+        div.crop
+            top: -100px
+            left: -200px
+
+            img.pattern
+                width: 400px
+                height: 400px
+
+        div.stats
+            margin-top: 4rem
+            width: 100%
+
+            div.stat
+                margin-block: 3rem
+
+            &, *
+                display: block
+
+#copy-button
+    top: -5rem
+    right: 0.5rem
+    float: right
+    padding: 5px
+    position: relative
+    font-size: 24px
+
+    cursor: pointer
+    background: $bg
+    border-radius: 4px
+    border: 1px solid $fg-light
+    transition: background 0.2s ease
+
+    &:hover
+        background: $bg-lighter
+
+    .bi-clipboard-check
+        color: $green

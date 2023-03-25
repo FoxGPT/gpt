@@ -1,0 +1,86 @@
+@import '_vars'
+
+nav
+    top: 0
+    left: 0
+    width: 100%
+    z-index: 500
+    position: fixed
+    padding-block: 1.5rem
+
+    background: $bg-lucent
+    border-bottom: 1px solid $fg-light
+
+    div.content
+        max-width: 700px
+        margin-inline: auto
+
+        div.right
+            float: right
+
+            a
+                position: relative
+
+    .bi-arrow-up-short
+        position: absolute
+        top: -0.5rem
+        right: -1rem
+        font-size: 24px
+        opacity: 0.4
+
+        transform: rotate(45deg)
+
+    a
+        color: $fg
+        opacity: 0.8
+        font-size: 16px
+        text-decoration: none
+        margin-right: 1rem
+
+        &:hover
+            opacity: 1
+
+    div.mobile-nav
+        display: none
+
+main
+    padding-top: 7rem
+
+@media (max-width: 1000px)
+    nav
+        div.content
+            display: none
+
+            &.mobile-view
+                display: block
+                padding: 3rem
+                position: relative
+
+                a
+                    display: block
+                    font-size: 24px
+                    margin-bottom: 1rem
+
+                div.right
+                    i
+                        display: none
+
+                    top: 0
+                    right: 0
+                    text-align: right
+                    position: absolute
+                    transform: translate(-50%, 50%)
+
+
+        div.mobile-nav
+            font-size: 36px
+            margin-right: 2rem
+            display: block
+            float: right
+
+            cursor: pointer
+            transition: 0.3s
+
+            &.active
+                transform: rotate(90deg)
+

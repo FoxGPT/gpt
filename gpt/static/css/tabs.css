@@ -4,7 +4,7 @@
 }
 .tab-list a {
   padding: 0.5rem;
-  background: #1b1721;
+  background: rgba(20, 19, 23, 0.8470588235);
   padding-right: 0.5rem;
   text-decoration: none;
   transition: background 0.2s;
@@ -16,9 +16,9 @@
   border-top-right-radius: 4px;
   border-right: none;
 }
-.tab-list a:hover {
-  background: #25212a;
-}
 .tab-list a.active {
-  background: #2e2a39;
+  background: #471f4f;
+}
+.tab-list a:hover {
+  background: rgba(170, 43, 138, 0.7333333333);
 }/*# sourceMappingURL=tabs.css.map */

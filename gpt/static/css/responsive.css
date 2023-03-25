@@ -1,0 +1,7 @@
+@media (max-width: 1000px) {
+  body {
+    width: auto;
+    max-width: 100%;
+    margin-inline: 2rem;
+  }
+}/*# sourceMappingURL=responsive.css.map */

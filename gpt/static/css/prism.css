@@ -28,7 +28,7 @@ pre[class*=language-] {
 
 :not(pre) > code[class*=language-],
 pre[class*=language-] {
-  background: #1b1721;
+  background: rgba(20, 19, 23, 0.8470588235);
   margin-bottom: 2rem;
 }
 

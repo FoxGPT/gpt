@@ -2,10 +2,10 @@
 @import 'https://fonts.cdnfonts.com/css/roboto-mono';
 html {
   scroll-behavior: smooth;
-  scroll-margin-top: 5rem;
-  background: #130f18;
+  background: #050505;
 }
 html * {
+  scroll-margin-top: 5rem;
   color: #f9f6f6;
   box-sizing: border-box;
   font-family: "Inter", sans-serif;
@@ -13,7 +13,16 @@ html * {
 
 h1 {
   margin-top: 0;
-  font-weight: 500;
+  font-size: 38px;
+  font-weight: 800;
+}
+
+h2 {
+  font-size: 32px;
+}
+
+h3 {
+  font-size: 28px;
 }
 
 h2, h3, h4, h5, h6 {
@@ -21,7 +30,7 @@ h2, h3, h4, h5, h6 {
 }
 
 mark {
-  color: #da92fe;
+  color: #fe92e7;
   background: none;
 }
 
@@ -39,72 +48,48 @@ code {
   white-space: normal;
 }
 
-#copy-button {
-  font-size: 24px;
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+button {
   cursor: pointer;
-  position: relative;
-  top: -5rem;
-  right: 0.5rem;
-  float: right;
-  background: #130f18;
-  padding: 5px;
+  border: none;
   border-radius: 4px;
-  border: 1px solid #858585;
-  transition: background 0.2s ease;
-}
-#copy-button:hover {
-  background: #2e2a39;
-}
-#copy-button .bi-clipboard-check {
-  color: #5de20b;
+  padding: 0.5rem 1rem;
+  font-size: 16px;
+  background: linear-gradient(90deg, #fa2c08 0%, #ff0eb1 41%, #4837c9 100%);
+  background-size: 400% 400%;
+  animation: gradient 5s ease infinite;
 }
 
 body {
-  margin: 0;
-  padding-block: 2rem;
   max-width: 700px;
   margin-inline: auto;
-}
-
-nav {
-  max-width: 700px;
-  margin-inline: auto;
-  margin-bottom: 2rem;
-}
-nav a {
-  color: #da92fe;
-  font-size: 22px;
-  text-decoration: none;
-  margin-right: 1rem;
-}
-nav a:hover {
-  text-decoration: underline;
 }
 
 footer {
-  margin-top: 2rem;
+  margin-block: 3rem;
   width: 100%;
   opacity: 0.5;
   font-weight: 300;
   text-align: center;
 }
 footer a {
-  color: #f298f7;
+  color: #f798be;
   text-decoration: none;
 }
 footer a:hover {
   text-decoration: underline;
 }
 
-@media (max-width: 1000px) {
-  nav {
-    margin-bottom: 1rem;
-  }
-  body {
-    padding-block: 1rem;
-    padding-inline: 1rem;
-  }
-}
 input {
   width: 100%;
   font-size: 16px;
@@ -112,11 +97,23 @@ input {
   border-radius: 5px;
   padding: 0.5rem;
   color: #f9f6f6;
-  background: #1b1721;
+  background: rgba(20, 19, 23, 0.8470588235);
   outline: none;
   margin-bottom: 1rem;
 }
 
 svg.loading {
+  width: 150px;
+  height: 150px;
   filter: invert(1);
+}
+
+*::-moz-selection {
+  color: #050505;
+  background: #fe92e7;
+}
+
+*::selection {
+  color: #050505;
+  background: #fe92e7;
 }/*# sourceMappingURL=future.css.map */

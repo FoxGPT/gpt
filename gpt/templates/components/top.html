@@ -8,20 +8,13 @@
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🤖</text></svg>">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
 
-    {% for css in 'future tabs table faq'.split() %}
+    {% for css in 'future tabs table faq nav responsive landing'.split() %}
     <link rel="stylesheet" href="/static/css/{{ css }}.css">
     {% endfor %}
 
-    <title>Free GPT API</title>
+    <title>NovaGPT</title>
 </head>
-<nav>
-    <a href="/#">Home</a>
-    <a href="https://discord.gg/SCymptZmUK" target="_blank">Support/Discord</a>
-    <a href="/#examples">Examples</a>
-    <a href="/#features">Features</a>
-    <a href="/#faq">FAQ</a>
-    <a href="/#donate">Donate</a>
-</nav>
+{% include 'components/nav.html' %}
 
 <body{{ ' class=' + body_class + '' if body_class else '' }}>
 <main>

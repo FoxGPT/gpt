@@ -36,7 +36,4 @@ document.addEventListener('DOMContentLoaded', function () {
 
         navigator.clipboard.writeText(code);
     });
-
-    updateCounter();
-    // setInterval(updateCounter, 5000);
 });

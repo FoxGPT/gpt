@@ -4,9 +4,9 @@
 
 html
     scroll-behavior: smooth
-    scroll-margin-top: 5rem
 
     *
+        scroll-margin-top: 5rem
         color: $fg
         box-sizing: border-box
         font-family: $font
@@ -15,7 +15,13 @@ html
 
 h1
     margin-top: 0
-    font-weight: 500
+    font-size: 38px
+    font-weight: 800
+
+h2
+    font-size: 32px
+h3
+    font-size: 28px
 
 h2, h3, h4, h5, h6
     font-weight: 400
@@ -35,47 +41,31 @@ code
     word-break: break-all
     white-space: normal
 
-#copy-button
-    font-size: 24px
+@keyframes gradient
+    0%
+        background-position: 0% 50%
+    50%
+        background-position: 100% 50%
+    100%
+        background-position: 0% 50%
+
+button
     cursor: pointer
-    position: relative
-    top: -5rem
-    right: 0.5rem
-    float: right
-    background: $bg
-    padding: 5px
+    border: none
     border-radius: 4px
-    border: 1px solid $fg-light
-    transition: background 0.2s ease
+    padding: 0.5rem 1rem
+    font-size: 16px
 
-    &:hover
-        background: $bg-lighter
-
-    .bi-clipboard-check
-        color: $green
+    background: $gradient
+    background-size: 400% 400%
+    animation: gradient 5s ease infinite
 
 body
-    margin: 0
-    padding-block: 2rem
     max-width: 700px
     margin-inline: auto
-
-nav
-    max-width: 700px
-    margin-inline: auto
-    margin-bottom: 2rem
-
-    a
-        color: $accent-light
-        font-size: 22px
-        text-decoration: none
-        margin-right: 1rem
-
-        &:hover
-            text-decoration: underline
 
 footer
-    margin-top: 2rem
+    margin-block: 3rem
     width: 100%
     opacity: 0.5
     font-weight: 300
@@ -87,14 +77,6 @@ footer
 
         &:hover
             text-decoration: underline
-
-@media (max-width: 1000px)
-    nav
-        margin-bottom: 1rem
-
-    body
-        padding-block: 1rem
-        padding-inline: 1rem
 
 input
     width: 100%
@@ -110,5 +92,10 @@ input
     margin-bottom: 1rem
 
 svg.loading
-    
+    width: 150px
+    height: 150px
     filter: invert(1)
+
+*::selection
+    color: $bg
+    background: $accent-light
