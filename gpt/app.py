@@ -32,6 +32,8 @@ if not os.path.isfile('stats.json'):
         json.dump({}, f)
 
 def get_examples():
+    """Returns the content of the example files for the API usage."""
+
     examples = []
     for name in os.listdir('gpt/examples/'):
         if not name.startswith('.'):
@@ -45,6 +47,7 @@ def get_examples():
     return examples
 
 def get_stats():
+    """Returns the stats for the API usage."""
     with open('stats.json', 'r') as stats_file:
         stats = json.loads(stats_file.read())
 
@@ -60,11 +63,11 @@ def get_stats():
 
 @app.route('/robots.txt')
 def robots():
-    return flask.Response('User-agent: *\nAllow: /', mimetype='text/plain')
+    return flask.Response('User-agent: *\nAllow: /\nSitemap: https://gpt.bot.nu/sitemap.xml', mimetype='text/plain')
 
 @app.route('/sitemap.xml')
 def sitemap():
-    return flask.Response(open('gpt/static/sitemap.xml').read(), mimetype="text/xml")
+    return flask.Response(open('gpt/static/sitemap.xml', 'r').read(), mimetype="text/xml")
 
 @app.route('/favicon.ico')
 def favicon():
@@ -78,6 +81,7 @@ def index():
 
 @app.route('/<path:subpath>', methods=ALL_METHODS)
 def api_proxy(subpath):
+    """Proxy API requests to OpenAI."""
     with open('req.log', 'a') as req_log:
         req_log.write(f'{flask.request.data} {flask.request.get_json()}\n')
 
@@ -89,9 +93,13 @@ def api_proxy(subpath):
 
             error_log.write(f'{full_error_traceback}\n')
 
-        return {
+        return flask.Response(
+            {
             'error': 'Sorry, an error occurred. Please contact us: https://discord.gg/SCymptZmUK'
-        }
+            },
+            status=500,
+            mimetype='application/json'
+        )
 
 @app.route('/donate')
 def donate_view():

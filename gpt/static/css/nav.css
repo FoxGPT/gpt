@@ -54,6 +54,9 @@ main {
 }
 
 @media (max-width: 1000px) {
+  nav {
+    padding-block: 0.5rem;
+  }
   nav div.content {
     display: none;
   }
@@ -66,6 +69,11 @@ main {
     display: block;
     font-size: 24px;
     margin-bottom: 1rem;
+  }
+  nav div.content.mobile-view a.active {
+    padding: 0;
+    background: none;
+    font-weight: bold;
   }
   nav div.content.mobile-view div.right {
     top: 0;

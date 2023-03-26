@@ -58,6 +58,8 @@ main
 
 @media (max-width: 1000px)
     nav
+        padding-block: 0.5rem
+
         div.content
             display: none
 
@@ -70,6 +72,11 @@ main
                     display: block
                     font-size: 24px
                     margin-bottom: 1rem
+
+                    &.active
+                        padding: 0
+                        background: none
+                        font-weight: bold
 
                 div.right
                     i
