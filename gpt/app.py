@@ -85,8 +85,38 @@ def api_proxy(subpath):
     with open('req.log', 'a') as req_log:
         req_log.write(f'{flask.request.data} {flask.request.get_json()}\n')
 
+    
+    params = flask.request.args.copy()
+    method = flask.request.method
+    content = flask.request.data
+    json_data = flask.request.get_json(silent=True)
+    is_stream = json_data.get('stream', False)
+
     try:
-        return ai.proxy_api(flask.request, subpath)
+        if is_stream:
+            return flask.Response(
+                ai.proxy_api(
+                    method=method,
+                    content=content,
+                    path=subpath,
+                    json_data=json_data,
+                    params=params,
+                    is_stream=True
+                ),
+                mimetype='text/event-stream',
+            )
+
+        else:
+            prox_resp = ai.proxy_api(
+                method=method,
+                content=content,
+                path=subpath,
+                json_data=json_data,
+                params=params,
+                is_stream=False
+            )
+            return prox_resp
+
     except Exception as e:
         with open('error.log', 'a') as error_log:
             full_error_traceback = f'{e} {traceback.format_exc()}'

@@ -1,7 +1,7 @@
 import os
 import json
-import httpx
 import random
+import requests
 
 from dotenv import load_dotenv
 load_dotenv()
@@ -77,42 +77,51 @@ def add_stat(key: str):
         stats[key] += 1
         json.dump(stats, stats_file)
 
-def proxy_api(request, path):
-    """Makes a request to the official API"""
-    params = request.args.copy()
-    params.pop('request-method', None)
+def proxy_stream(resp):
+    for line in resp.iter_lines():
+        if line:
+            yield f'{line.decode("utf8")}\n\n'
 
+def proxy_api(method, content, path, json_data, params, is_stream: bool=False):
+    """Makes a request to the official API"""
     actual_path = path.replace('v1/', '')
 
     if '/' in actual_path:
-        add_stat('*')
-        add_stat(actual_path)
+        try:
+            add_stat('*')
+            add_stat(actual_path)
+        except json.JSONDecodeError:
+            pass
 
     while True:
         key = get_key()
 
         try:
-            resp = httpx.request(
-                method=request.args.get('request-method', request.method),
+            resp = requests.request(
+                method=method,
                 url=f'https://api.openai.com/v1/{actual_path}',
                 headers={
                     'Authorization': f'Bearer {key}',
                     'Content-Type': 'application/json'
                 },
-                data=request.data,
-                json=request.get_json(silent=True),
+                data=content,
+                json=json_data,
                 params=params,
                 timeout=30,
+                stream=is_stream
             )
-        except httpx.ReadTimeout:
+
+        except NotADirectoryError:
             continue
-        
-        if not isinstance(resp, dict):
+
+        if is_stream:
+            return proxy_stream(resp)
+ 
+        else:
             resp = resp.json()
 
-        if resp.get('error'):
-            if resp['error']['code'] == 'invalid_api_key':
-                invalidate_key(key)
-                continue
-
-        return resp
+            if resp.get('error'):
+                if resp['error']['code'] == 'invalid_api_key':
+                    invalidate_key(key)
+                    continue
+            return resp

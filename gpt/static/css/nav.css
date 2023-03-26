@@ -9,7 +9,7 @@ nav {
   border-bottom: 1px solid rgba(194, 194, 194, 0.231372549);
 }
 nav div.content {
-  max-width: 700px;
+  max-width: 850px;
   margin-inline: auto;
 }
 nav div.content div.right {
@@ -62,13 +62,14 @@ main {
   }
   nav div.content.mobile-view {
     display: block;
-    padding: 3rem;
+    padding: 2rem;
     position: relative;
   }
   nav div.content.mobile-view a {
     display: block;
     font-size: 24px;
     margin-bottom: 1rem;
+    margin-right: 0;
   }
   nav div.content.mobile-view a.active {
     padding: 0;
