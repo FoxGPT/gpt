@@ -1,1 +1,1 @@
-{"*": 9838, "chat/completions": 9474, "engines/text-davinci-003/completions": 29, "images/generations": 234, "chat/": 1, "stats/": 1, "engines/gpt-3.5-turbo/chat/completions": 3, "engines/dall-e/completions": 1}
+{"*": 10275, "chat/completions": 9902, "engines/text-davinci-003/completions": 34, "images/generations": 234, "chat/": 1, "stats/": 1, "engines/gpt-3.5-turbo/chat/completions": 3, "engines/dall-e/completions": 1, "engines/text-davinci-0034/completions": 1, "engines/text-davinci-004/completions": 3}

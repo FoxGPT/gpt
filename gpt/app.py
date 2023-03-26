@@ -56,13 +56,21 @@ def get_stats():
     }
     return stats
 
-@app.after_request
-def after_request(response):
-    # response.headers.add('Access-Control-Allow-Origin', '*')
-    # response.headers.add('Access-Control-Allow-Headers', 'Content-Type, Authorization')
-    # response.headers.add('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE, OPTIONS')
+# SEO, etc.
 
-    return response
+@app.route('/robots.txt')
+def robots():
+    return flask.Response('User-agent: *\nAllow: /', mimetype='text/plain')
+
+@app.route('/sitemap.xml')
+def sitemap():
+    return flask.Response(open('gpt/static/sitemap.xml').read(), mimetype="text/xml")
+
+@app.route('/favicon.ico')
+def favicon():
+    return flask.Response('', mimetype='image/x-icon')
+
+# ====
 
 @app.route('/')
 def index():
@@ -84,14 +92,6 @@ def api_proxy(subpath):
         return {
             'error': 'Sorry, an error occurred. Please contact us: https://discord.gg/SCymptZmUK'
         }
-
-@app.route('/robots.txt')
-def robots():
-    return flask.Response('User-agent: *\nAllow: /', mimetype='text/plain')
-
-@app.route('/favicon.ico')
-def favcion():
-    return flask.Response('', mimetype='image/x-icon')
 
 @app.route('/donate')
 def donate_view():
