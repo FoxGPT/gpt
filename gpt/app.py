@@ -87,7 +87,7 @@ def api_proxy(subpath):
 
 @app.route('/robots.txt')
 def robots():
-    return flask.Response('User-agent: *\nDisallow: /', mimetype='text/plain')
+    return flask.Response('User-agent: *\nAllow: /', mimetype='text/plain')
 
 @app.route('/favicon.ico')
 def favcion():

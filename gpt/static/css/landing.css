@@ -26,6 +26,7 @@ section.landing h1 .gradient {
 }
 section.landing .subtitle {
   opacity: 0.8;
+  font-size: 20px;
   margin-bottom: 4rem;
 }
 section.landing div.buttons {
@@ -172,7 +173,7 @@ section.landing div.stats div.stat svg {
   transition: background 0.2s ease;
 }
 #copy-button:hover {
-  background: #471f4f;
+  background: #382b54;
 }
 #copy-button .bi-clipboard-check {
   color: #5de20b;

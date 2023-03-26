@@ -3,18 +3,19 @@ table {
   text-align: left;
   border-spacing: 0;
   margin-bottom: 2rem;
+  border-radius: 4px;
   border-collapse: collapse;
 }
 table th {
   padding: 0.5rem;
   font-weight: bold;
-  background: #471f4f;
+  background: #382b54;
 }
 table td {
   padding: 0.5rem;
 }
 table tr:nth-child(even) {
-  background: rgba(20, 19, 23, 0.8470588235);
+  background: #140f1e;
 }
 table tr.total {
   font-weight: bold;

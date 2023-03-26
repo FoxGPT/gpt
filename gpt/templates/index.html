@@ -3,9 +3,9 @@
 <section class="landing">
     <h1>Nova<span class="gradient">GPT</span></h1>
     <p class="subtitle">
-        Free access to cutting-edge AI for everyone.
+        Making cutting-edge AI tech available for free.
         <br>
-        <i>Sounds too good to be true? <a href="https://reqbin.com/c-hpb4z8lq" target="_blank">See for yourself!</a></i>
+        Sounds too good to be true? <a href="https://reqbin.com/c-hpb4z8lq" target="_blank">See for yourself!</a>
     </p>
     <div class="buttons">
         <a href="#get-started">
@@ -28,35 +28,66 @@
     </div>
 
     <div class="stats">
+        <script>            
+            function animateValue(obj, end, duration) {
+                let start = 0;
+                let startTimestamp = null;
+                duration = duration || 2000;
+
+                const step = (timestamp) => {
+                    if (!startTimestamp) startTimestamp = timestamp;
+                        const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                        obj.innerHTML = Math.floor(progress * (end - start) + start);
+                    
+                    if (progress < 1) {
+                        window.requestAnimationFrame(step);
+                    }
+                };
+                window.requestAnimationFrame(step);
+            }
+        </script>
+
         <div class="stat">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-globe" viewBox="0 0 16 16">
                 <path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm7.5-6.923c-.67.204-1.335.82-1.887 1.855A7.97 7.97 0 0 0 5.145 4H7.5V1.077zM4.09 4a9.267 9.267 0 0 1 .64-1.539 6.7 6.7 0 0 1 .597-.933A7.025 7.025 0 0 0 2.255 4H4.09zm-.582 3.5c.03-.877.138-1.718.312-2.5H1.674a6.958 6.958 0 0 0-.656 2.5h2.49zM4.847 5a12.5 12.5 0 0 0-.338 2.5H7.5V5H4.847zM8.5 5v2.5h2.99a12.495 12.495 0 0 0-.337-2.5H8.5zM4.51 8.5a12.5 12.5 0 0 0 .337 2.5H7.5V8.5H4.51zm3.99 0V11h2.653c.187-.765.306-1.608.338-2.5H8.5zM5.145 12c.138.386.295.744.468 1.068.552 1.035 1.218 1.65 1.887 1.855V12H5.145zm.182 2.472a6.696 6.696 0 0 1-.597-.933A9.268 9.268 0 0 1 4.09 12H2.255a7.024 7.024 0 0 0 3.072 2.472zM3.82 11a13.652 13.652 0 0 1-.312-2.5h-2.49c.062.89.291 1.733.656 2.5H3.82zm6.853 3.472A7.024 7.024 0 0 0 13.745 12H11.91a9.27 9.27 0 0 1-.64 1.539 6.688 6.688 0 0 1-.597.933zM8.5 12v2.923c.67-.204 1.335-.82 1.887-1.855.173-.324.33-.682.468-1.068H8.5zm3.68-1h2.146c.365-.767.594-1.61.656-2.5h-2.49a13.65 13.65 0 0 1-.312 2.5zm2.802-3.5a6.959 6.959 0 0 0-.656-2.5H12.18c.174.782.282 1.623.312 2.5h2.49zM11.27 2.461c.247.464.462.98.64 1.539h1.835a7.024 7.024 0 0 0-3.072-2.472c.218.284.418.598.597.933zM10.855 4a7.966 7.966 0 0 0-.468-1.068C9.835 1.897 9.17 1.282 8.5 1.077V4h2.355z"/>
             </svg>
-            <span class="number">{{ stats.total }}</span>
+            <span class="number" id="stats-total">{{ stats.total }}</span>
             <span class="label">Total requests</span>
+            <script>
+                animateValue(document.getElementById('stats-total'), {{ stats.total }})
+            </script>
         </div>
         <div class="stat">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-left-dots" viewBox="0 0 16 16">
                 <path d="M14 1a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H4.414A2 2 0 0 0 3 11.586l-2 2V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12.793a.5.5 0 0 0 .854.353l2.853-2.853A1 1 0 0 1 4.414 12H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
                 <path d="M5 6a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
               </svg>
-            <span class="number">{{ stats.chat }}</span>
+            <span class="number" id="stats-chat">{{ stats.chat }}</span>
             <span class="label">Chat completions</span>
+            <script>
+                animateValue(document.getElementById('stats-chat'), {{ stats.chat }})
+            </script>
         </div>
         <div class="stat">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-blockquote-left" viewBox="0 0 16 16">
                 <path d="M2.5 3a.5.5 0 0 0 0 1h11a.5.5 0 0 0 0-1h-11zm5 3a.5.5 0 0 0 0 1h6a.5.5 0 0 0 0-1h-6zm0 3a.5.5 0 0 0 0 1h6a.5.5 0 0 0 0-1h-6zm-5 3a.5.5 0 0 0 0 1h11a.5.5 0 0 0 0-1h-11zm.79-5.373c.112-.078.26-.17.444-.275L3.524 6c-.122.074-.272.17-.452.287-.18.117-.35.26-.51.428a2.425 2.425 0 0 0-.398.562c-.11.207-.164.438-.164.692 0 .36.072.65.217.873.144.219.385.328.72.328.215 0 .383-.07.504-.211a.697.697 0 0 0 .188-.463c0-.23-.07-.404-.211-.521-.137-.121-.326-.182-.568-.182h-.282c.024-.203.065-.37.123-.498a1.38 1.38 0 0 1 .252-.37 1.94 1.94 0 0 1 .346-.298zm2.167 0c.113-.078.262-.17.445-.275L5.692 6c-.122.074-.272.17-.452.287-.18.117-.35.26-.51.428a2.425 2.425 0 0 0-.398.562c-.11.207-.164.438-.164.692 0 .36.072.65.217.873.144.219.385.328.72.328.215 0 .383-.07.504-.211a.697.697 0 0 0 .188-.463c0-.23-.07-.404-.211-.521-.137-.121-.326-.182-.568-.182h-.282a1.75 1.75 0 0 1 .118-.492c.058-.13.144-.254.257-.375a1.94 1.94 0 0 1 .346-.3z"/>
               </svg>
-            <span class="number">{{ stats.text }}</span>
+            <span class="number" id="stats-text">{{ stats.text }}</span>
             <span class="label">Text completions</span>
+            <script>
+                animateValue(document.getElementById('stats-text'), {{ stats.text }})
+            </script>
         </div>
         <div class="stat">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-card-image" viewBox="0 0 16 16">
                 <path d="M6.002 5.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
                 <path d="M1.5 2A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13zm13 1a.5.5 0 0 1 .5.5v6l-3.775-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062L1.002 12v.54A.505.505 0 0 1 1 12.5v-9a.5.5 0 0 1 .5-.5h13z"/>
             </svg>
-            <span class="number">{{ stats.image }}</span>
+            <span class="number" id="stats-image">{{ stats.image }}</span>
             <span class="label">Images generated</span>
+            <script>
+                animateValue(document.getElementById('stats-image'), {{ stats.image }})
+            </script>
         </div>
     </div>
 </section>
@@ -107,6 +138,8 @@
 
 <h2 id="features">Features</h2>
 <p>Most of the main features of <a href="https://platform.openai.com/docs/api-reference" target="_blank">OpenAI's API</a> are supported.</p>
+<p>There isn't any documentation for NovaGPT, as it's based on OpenAI.</p>
+
 <table>
     <tr>
         <th>Feature</th>
@@ -197,11 +230,6 @@
         <td>❌</td>
     </tr>
 </table>
-
-<h3>Chat</h3>
-<p>
-    You can learn more about how to use <a href="https://platform.openai.com/docs/api-reference/chat" target="_blank">OpenAI's chat completion API</a> here.
-</p>
 
 <h2 id="rate-limits">Rate Limits</h2>
 <ul>

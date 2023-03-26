@@ -37,7 +37,13 @@ nav a:hover {
   opacity: 1;
 }
 nav a.active {
-  font-weight: bold;
+  opacity: 1;
+  padding: 5px 8px;
+  border-radius: 9999px;
+  background: rgba(171, 166, 177, 0.3137254902);
+}
+nav a:last-of-type {
+  margin-right: 0;
 }
 nav div.mobile-nav {
   display: none;

@@ -11,6 +11,15 @@ html * {
   font-family: "Inter", sans-serif;
 }
 
+script {
+  display: none;
+  position: absolute;
+  top: -9000px;
+  left: -9000px;
+  opacity: 0;
+  visibility: hidden;
+}
+
 h1 {
   margin-top: 0;
   font-size: 38px;
@@ -97,7 +106,7 @@ input {
   border-radius: 5px;
   padding: 0.5rem;
   color: #f9f6f6;
-  background: rgba(20, 19, 23, 0.8470588235);
+  background: #140f1e;
   outline: none;
   margin-bottom: 1rem;
 }
