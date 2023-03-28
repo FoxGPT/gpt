@@ -4,7 +4,7 @@ import json
 import flask
 import openai
 import traceback
-
+import requests
 import ai
 
 from dotenv import load_dotenv
@@ -79,18 +79,20 @@ def favicon():
 def index():
     return flask.render_template('index.html', examples=get_examples(), rate_limits=RATE_LIMITS, stats=get_stats(), title='Home')
 
+import requests
+import os
+
 @app.route('/<path:subpath>', methods=ALL_METHODS)
 def api_proxy(subpath):
     """Proxy API requests to OpenAI."""
     with open('req.log', 'a') as req_log:
         req_log.write(f'{flask.request.data} {flask.request.get_json()}\n')
 
-    
     params = flask.request.args.copy()
     method = flask.request.method
     content = flask.request.data
     json_data = flask.request.get_json(silent=True)
-    is_stream = json_data.get('stream', False)
+    is_stream = json_data.get('stream', False) if json_data else False
 
     try:
         if is_stream:
@@ -105,17 +107,46 @@ def api_proxy(subpath):
                 ),
                 mimetype='text/event-stream',
             )
-
         else:
-            prox_resp = ai.proxy_api(
-                method=method,
-                content=content,
-                path=subpath,
-                json_data=json_data,
-                params=params,
-                is_stream=False
-            )
-            return prox_resp
+            # If file is attached, send it along with the request
+            file = flask.request.files.get('file')
+            if file:
+                # Save file to disk temporarily
+                file_path = os.path.join('/tmp', file.filename)
+                file.save(file_path)
+
+                # Create multipart/form-data payload
+                payload = {
+                    'model': (None, flask.request.form.get('model')),
+                    'file': (file.filename, open(file_path, 'rb'), 'application/octet-stream')
+                }
+
+                # Send request with payload
+                prox_resp = ai.proxy_api(
+                    method=method,
+                    content=payload,
+                    path=subpath,
+                    json_data=json_data,
+                    params=params,
+                    files=payload,
+                    is_stream=False,
+                )
+
+                # Delete temporary file
+                os.remove(file_path)
+
+                # Return response from API
+                return prox_resp
+            else:
+                prox_resp = ai.proxy_api(
+                    method=method,
+                    content=content,
+                    path=subpath,
+                    json_data=json_data,
+                    params=params,
+                    is_stream=False
+                )
+                return prox_resp
 
     except Exception as e:
         with open('error.log', 'a') as error_log:

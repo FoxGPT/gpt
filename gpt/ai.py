@@ -82,7 +82,7 @@ def proxy_stream(resp):
         if line:
             yield f'{line.decode("utf8")}\n\n'
 
-def proxy_api(method, content, path, json_data, params, is_stream: bool=False):
+def proxy_api(method, content, path, json_data, params, is_stream: bool=False, files=None):
     """Makes a request to the official API"""
     actual_path = path.replace('v1/', '')
 
@@ -97,19 +97,28 @@ def proxy_api(method, content, path, json_data, params, is_stream: bool=False):
         key = get_key()
 
         try:
-            resp = requests.request(
-                method=method,
-                url=f'https://api.openai.com/v1/{actual_path}',
-                headers={
-                    'Authorization': f'Bearer {key}',
-                    'Content-Type': 'application/json'
-                },
-                data=content,
-                json=json_data,
-                params=params,
-                timeout=30,
-                stream=is_stream
-            )
+            if files:
+                print("hi")
+                resp = requests.post(f'https://api.openai.com/v1/{actual_path}', headers={
+                        'Authorization': f'Bearer {key}'
+                }, files=files, params=params)
+            else:
+                resp = requests.request(
+                    method=method,
+                    url=f'https://api.openai.com/v1/{actual_path}', 
+                    headers={
+                        'Authorization': f'Bearer {key}',
+                        'Content-Type': 'application/json'
+                    },
+                    data=content,
+                    json=json_data,
+                    params=params,
+                    
+                    timeout=30,
+                    stream=is_stream
+                )
+                print(resp)
+
 
         except NotADirectoryError:
             continue
