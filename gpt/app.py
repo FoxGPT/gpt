@@ -113,8 +113,12 @@ def api_proxy(subpath):
                 # Save file to disk temporarily
                 file_path = os.path.join('/tmp', file.filename)
                 file.save(file_path)
+                print("saved file")
                 import pdb; pdb.set_trace()
                 # Create multipart/form-data payload
+                print("creating payload")
+                print(flask.request.form.get('model'))
+                print(file.filename)
                 payload = {
                     'model': (None, flask.request.form.get('model')),
                     'file': (file.filename, open(file_path, 'rb'), 'application/octet-stream')
