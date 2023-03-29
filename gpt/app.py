@@ -85,9 +85,9 @@ import os
 @app.route('/<path:subpath>', methods=ALL_METHODS)
 def api_proxy(subpath):
     """Proxy API requests to OpenAI."""
-    pdb.set_trace()
-    with open('req.log', 'a') as req_log:
-        req_log.write(f'{flask.request.data} {flask.request.get_json()}\n')
+    if not 'audio' in subpath:
+        with open('req.log', 'a') as req_log:
+            req_log.write(f'{flask.request.data} {flask.request.get_json()}\n')
 
     params = flask.request.args.copy()
     method = flask.request.method
