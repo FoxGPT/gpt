@@ -82,7 +82,7 @@ def proxy_stream(resp):
         if line:
             yield f'{line.decode("utf8")}\n\n'
 
-def proxy_api(method, content, path, json_data, params, is_stream: bool=False, file=None):
+def proxy_api(method, content, path, json_data, params, is_stream: bool=False, files=None):
     """Makes a request to the official API"""
     actual_path = path.replace('v1/', '')
 
@@ -97,14 +97,10 @@ def proxy_api(method, content, path, json_data, params, is_stream: bool=False, f
         key = get_key()
 
         try:
-            if file:
-                files = {
-                    'file': (file.filename, open(file_path, 'rb'), 'application/octet-stream')
-                }
-
+            if files:
+                print("hi")
                 resp = requests.post(f'https://api.openai.com/v1/{actual_path}', headers={
-                    'Authorization': f'Bearer {key}',
-                    'Content-Type': 'multipart/form-data' if files else 'application/json'
+                        'Authorization': f'Bearer {key}'
                 }, files=files, params=params)
             else:
                 resp = requests.request(
@@ -117,10 +113,11 @@ def proxy_api(method, content, path, json_data, params, is_stream: bool=False, f
                     data=content,
                     json=json_data,
                     params=params,
+                    
                     timeout=30,
                     stream=is_stream
                 )
-
+                print(resp)
 
 
         except NotADirectoryError:

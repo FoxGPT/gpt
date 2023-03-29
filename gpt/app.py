@@ -6,9 +6,10 @@ import openai
 import traceback
 import requests
 import ai
+
 from dotenv import load_dotenv
 from werkzeug.middleware.proxy_fix import ProxyFix
-import pdb
+
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
 
@@ -55,7 +56,6 @@ def get_stats():
         'chat': stats['chat/completions'] + stats['engines/gpt-3.5-turbo/chat/completions'],
         'text': stats['engines/text-davinci-003/completions'],
         'image': stats['images/generations'],
-        'audio': stats['audio/transcriptions'],
     }
     return stats
 
@@ -85,7 +85,6 @@ import os
 @app.route('/<path:subpath>', methods=ALL_METHODS)
 def api_proxy(subpath):
     """Proxy API requests to OpenAI."""
-    pdb.set_trace()
     if not 'audio' in subpath:
         with open('req.log', 'a') as req_log:
             req_log.write(f'{flask.request.data} {flask.request.get_json()}\n')
@@ -130,7 +129,7 @@ def api_proxy(subpath):
                     path=subpath,
                     json_data=json_data,
                     params=params,
-                    file=payload,
+                    files=payload,
                     is_stream=False,
                 )
 
