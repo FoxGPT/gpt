@@ -3,4 +3,3 @@ httpx
 openai
 flask-limiter
 python-dotenv
-ssl
