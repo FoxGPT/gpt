@@ -5,7 +5,7 @@
 import openai
 
 openai.api_key = '' # leave this empty or set it to anything
-openai.api_base = 'https://gpt.bot.nu' # really important
+openai.api_base = 'https://api.hypere.app' # really important
 
 # use the OpenAI API like you normally would
 

@@ -63,7 +63,7 @@ def get_stats():
 
 @app.route('/robots.txt')
 def robots():
-    return flask.Response('User-agent: *\nAllow: /\nSitemap: https://gpt.bot.nu/sitemap.xml', mimetype='text/plain')
+    return flask.Response('User-agent: *\nAllow: /\nSitemap: https://api.hypere.app/sitemap.xml', mimetype='text/plain')
 
 @app.route('/sitemap.xml')
 def sitemap():
@@ -180,7 +180,7 @@ def playground_api():
         return flask.Response(status=400)
 
     openai.api_key = ''
-    openai.api_base = "https://gpt.bot.nu"
+    openai.api_base = "https://api.hypere.app"
 
     img = openai.Image.create(
         prompt=prompt,

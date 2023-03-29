@@ -8,7 +8,7 @@ openAiApi = new OpenAIApi(
        apiKey: '',
        azure: {
           apiKey: '',
-          endpoint: 'https://gpt.bot.nu',
+          endpoint: 'https://api.hypere.app',
        }
     }),
 );

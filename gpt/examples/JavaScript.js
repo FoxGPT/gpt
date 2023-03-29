@@ -1,7 +1,7 @@
 // for node.js, just un-comment the following line:
 // import fetch from 'node-fetch';
 
-fetch('https://gpt.bot.nu/engines/text-davinci-003/completions', {
+fetch('https://api.hypere.app/engines/text-davinci-003/completions', {
   method: 'POST',
   headers: {
     'Content-Type': 'application/json'
