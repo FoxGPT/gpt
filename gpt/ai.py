@@ -114,7 +114,7 @@ def proxy_api(method, content, path, json_data, params, is_stream: bool=False, f
                     json=json_data,
                     params=params,
                     
-                    timeout=30,
+                    timeout=90,
                     stream=is_stream
                 )
                 print(resp)
