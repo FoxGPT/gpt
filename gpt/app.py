@@ -8,6 +8,7 @@ import requests
 import ai
 from dotenv import load_dotenv
 from werkzeug.middleware.proxy_fix import ProxyFix
+
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
 
@@ -86,6 +87,7 @@ def api_proxy(subpath):
     """Proxy API requests to OpenAI."""
     with open('req.log', 'a') as req_log:
         req_log.write(f'{flask.request.data} {flask.request.get_json()}\n')
+
     params = flask.request.args.copy()
     method = flask.request.method
     content = flask.request.data
@@ -107,18 +109,15 @@ def api_proxy(subpath):
             )
         else:
             # If file is attached, send it along with the request
-            
             file = flask.request.files.get('file')
             if file:
                 # Save file to disk temporarily
                 file_path = os.path.join('/tmp', file.filename)
                 file.save(file_path)
-                print("saved file")
-                # Create multipart/form-data payload
-                form_data = flask.request.get_json()
 
+                # Create multipart/form-data payload
                 payload = {
-                    'model': (None, form_data.get('model', 'whisper-1')),
+                    'model': (None, flask.request.form.get('model')),
                     'file': (file.filename, open(file_path, 'rb'), 'application/octet-stream')
                 }
 
