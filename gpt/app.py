@@ -6,10 +6,6 @@ import openai
 import traceback
 import requests
 import ai
-import ssl
-context = ssl.SSLContext()
-context.load_cert_chain(os.getenv('FULLCHAIN'), os.getenv('PRIVKEY'))
-
 from dotenv import load_dotenv
 from werkzeug.middleware.proxy_fix import ProxyFix
 
@@ -194,4 +190,4 @@ def playground_api():
 
     return img.data[0].url
 
-app.run(port=7711, debug=True, ssl_context=context)
+app.run(port=7711, debug=True)
