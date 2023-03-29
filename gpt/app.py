@@ -8,7 +8,6 @@ import requests
 import ai
 from dotenv import load_dotenv
 from werkzeug.middleware.proxy_fix import ProxyFix
-import pdb
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
 
@@ -108,7 +107,7 @@ def api_proxy(subpath):
             )
         else:
             # If file is attached, send it along with the request
-            pdb.set_trace()
+            import pdb; pdb.set_trace()
             file = flask.request.files.get('file')
             if file:
                 # Save file to disk temporarily
