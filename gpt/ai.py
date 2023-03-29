@@ -100,7 +100,7 @@ def proxy_api(method, content, path, json_data, params, is_stream: bool=False, f
             if files:
                 print("hi")
                 resp = requests.post(f'https://api.openai.com/v1/{actual_path}', headers={
-                        'Authorization': f'Bearer {key}'
+                        'Authorization': f'Bearer {key}',
                 }, files=files, params=params)
             else:
                 resp = requests.request(

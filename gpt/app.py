@@ -56,6 +56,7 @@ def get_stats():
         'chat': stats['chat/completions'] + stats['engines/gpt-3.5-turbo/chat/completions'],
         'text': stats['engines/text-davinci-003/completions'],
         'image': stats['images/generations'],
+        'audio': stats['audio/transcriptions'],
     }
     return stats
 
