@@ -89,6 +89,18 @@
                 animateValue(document.getElementById('stats-image'), {{ stats.image }})
             </script>
         </div>
+        <div class="stat">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g id="SVGRepo_bgCarrier" stroke-width="0"/>
+                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"/>
+                <g id="SVGRepo_iconCarrier"> <path fill-rule="evenodd" clip-rule="evenodd" d="M10 6C10 4.89543 10.8954 4 12 4C13.1046 4 14 4.89543 14 6H13C12.4477 6 12 6.44772 12 7C12 7.55228 12.4477 8 13 8H14V10H13C12.4477 10 12 10.4477 12 11C12 11.5523 12.4477 12 13 12H14V13C14 14.1046 13.1046 15 12 15C10.8954 15 10 14.1046 10 13V6ZM12 2C9.79086 2 8 3.79086 8 6V13C8 15.2091 9.79086 17 12 17C14.2091 17 16 15.2091 16 13V11V7V6C16 3.79086 14.2091 2 12 2ZM7 11C7 10.4477 6.55228 10 6 10C5.44772 10 5 10.4477 5 11V13C5 16.5265 7.60771 19.4439 11 19.9291V21H8C7.44772 21 7 21.4477 7 22C7 22.5523 7.44772 23 8 23H12H16C16.5523 23 17 22.5523 17 22C17 21.4477 16.5523 21 16 21H13V19.9291C16.3923 19.4439 19 16.5265 19 13V11C19 10.4477 18.5523 10 18 10C17.4477 10 17 10.4477 17 11V13C17 15.7614 14.7614 18 12 18C9.23858 18 7 15.7614 7 13V11Z" fill="#ffffff"/> </g>
+                </svg>
+            <span class="number" id="stats-audio">{{ stats.audio }}</span>
+            <span class="label">Audio files transcribed</span>
+            <script>
+                animateValue(document.getElementById('stats-audio'), {{ stats.audio }})
+            </script>
+        </div>
     </div>
 </section>
 
@@ -219,6 +231,10 @@
     </tr>
         <tr>
         <td>gpt-3.5-turbo-0301</td>
+        <td>✅</td>
+    </tr>
+    <tr>
+        <td>whisper-1</td>
         <td>✅</td>
     </tr>
     <tr>

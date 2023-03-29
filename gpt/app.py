@@ -6,6 +6,9 @@ import openai
 import traceback
 import requests
 import ai
+import ssl
+context = ssl.SSLContext()
+context.load_cert_chain(os.getenv('FULLCHAIN'), os.getenv('PRIVKEY'))
 
 from dotenv import load_dotenv
 from werkzeug.middleware.proxy_fix import ProxyFix
@@ -56,6 +59,7 @@ def get_stats():
         'chat': stats['chat/completions'] + stats['engines/gpt-3.5-turbo/chat/completions'],
         'text': stats['engines/text-davinci-003/completions'],
         'image': stats['images/generations'],
+        'audio': stats['audio/transcriptions'],
     }
     return stats
 
@@ -190,4 +194,4 @@ def playground_api():
 
     return img.data[0].url
 
-app.run(port=7711, debug=True)
+app.run(port=7711, debug=True, ssl_context=context)
