@@ -8,7 +8,7 @@ import requests
 import ai
 from dotenv import load_dotenv
 from werkzeug.middleware.proxy_fix import ProxyFix
-
+import pdb
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
 
@@ -87,7 +87,7 @@ def api_proxy(subpath):
     """Proxy API requests to OpenAI."""
     with open('req.log', 'a') as req_log:
         req_log.write(f'{flask.request.data} {flask.request.get_json()}\n')
-
+    pdb.set_trace()
     params = flask.request.args.copy()
     method = flask.request.method
     content = flask.request.data
