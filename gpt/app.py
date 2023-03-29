@@ -114,16 +114,13 @@ def api_proxy(subpath):
                 file_path = os.path.join('/tmp', file.filename)
                 file.save(file_path)
                 print("saved file")
-                import pdb; pdb.set_trace()
                 # Create multipart/form-data payload
-                print("creating payload")
-                print(flask.request.form.get('model'))
-                print(file.filename)
+                form_data = flask.request.get_json()
+
                 payload = {
-                    'model': (None, flask.request.form.get('model')),
+                    'model': (None, form_data.get('model', 'whisper-1')),
                     'file': (file.filename, open(file_path, 'rb'), 'application/octet-stream')
                 }
-                import pdb; pdb.set_trace()
 
                 # Send request with payload
                 prox_resp = ai.proxy_api(
@@ -140,7 +137,6 @@ def api_proxy(subpath):
                 os.remove(file_path)
 
                 # Return response from API
-                import pdb; pdb.set_trace()
                 return prox_resp
             else:
                 prox_resp = ai.proxy_api(
