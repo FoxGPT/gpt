@@ -107,18 +107,19 @@ def api_proxy(subpath):
             )
         else:
             # If file is attached, send it along with the request
-            import pdb; pdb.set_trace()
+            
             file = flask.request.files.get('file')
             if file:
                 # Save file to disk temporarily
                 file_path = os.path.join('/tmp', file.filename)
                 file.save(file_path)
-
+                import pdb; pdb.set_trace()
                 # Create multipart/form-data payload
                 payload = {
                     'model': (None, flask.request.form.get('model')),
                     'file': (file.filename, open(file_path, 'rb'), 'application/octet-stream')
                 }
+                import pdb; pdb.set_trace()
 
                 # Send request with payload
                 prox_resp = ai.proxy_api(
@@ -135,6 +136,7 @@ def api_proxy(subpath):
                 os.remove(file_path)
 
                 # Return response from API
+                import pdb; pdb.set_trace()
                 return prox_resp
             else:
                 prox_resp = ai.proxy_api(
