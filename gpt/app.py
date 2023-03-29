@@ -128,7 +128,7 @@ def api_proxy(subpath):
                     path=subpath,
                     json_data=json_data,
                     params=params,
-                    files=payload,
+                    file=payload,
                     is_stream=False,
                 )
 
