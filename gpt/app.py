@@ -87,7 +87,6 @@ def api_proxy(subpath):
     """Proxy API requests to OpenAI."""
     with open('req.log', 'a') as req_log:
         req_log.write(f'{flask.request.data} {flask.request.get_json()}\n')
-    pdb.set_trace()
     params = flask.request.args.copy()
     method = flask.request.method
     content = flask.request.data
@@ -109,6 +108,7 @@ def api_proxy(subpath):
             )
         else:
             # If file is attached, send it along with the request
+            pdb.set_trace()
             file = flask.request.files.get('file')
             if file:
                 # Save file to disk temporarily
