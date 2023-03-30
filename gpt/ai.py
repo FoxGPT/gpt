@@ -2,7 +2,7 @@ import os
 import json
 import random
 import requests
-
+import re
 from dotenv import load_dotenv
 load_dotenv()
 
@@ -76,6 +76,16 @@ def add_stat(key: str):
 
         stats[key] += 1
         json.dump(stats, stats_file)
+def add_tokens(key: str, tokensnum: int):
+    """Add +1 to the specified statistic"""
+    with open('tokens.json', 'r') as tokens_file:
+        tokens = json.load(tokens_file)
+    if not tokens.get(key):
+        tokens[key] = 0
+    tokens[key] += tokensnum
+    with open('tokens.json', 'w') as tokens_out_file:
+        json.dump(tokens, tokens_out_file)
+
 
 def proxy_stream(resp):
     for line in resp.iter_lines():
@@ -133,4 +143,14 @@ def proxy_api(method, content, path, json_data, params, is_stream: bool=False, f
                 if resp['error']['code'] == 'invalid_api_key':
                     invalidate_key(key)
                     continue
+            pattern = r"completion(s)?"
+            matches = re.findall(pattern, actual_path)
+            print(resp)
+            if matches:
+                patternchat = r"/?chat/?"
+                matcheschat = re.findall(patternchat, actual_path)
+                if matcheschat:
+                    add_tokens('chat', resp['usage']['total_tokens'])
+                else:
+                    add_tokens('text', resp['usage']['total_tokens'])
             return resp
