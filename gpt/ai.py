@@ -143,11 +143,15 @@ def proxy_api(method, content, path, json_data, params, is_stream: bool=False, f
             respjs = resp.json()
 
             if respjs.get('error'):
+                if 'chat model' in respjs['error']['message']:
+                    print("gpt-4")
+                    print(key)
                 if respjs['error']['code'] == 'invalid_api_key' or 'exceeded' in respjs['error']['message'] or respjs['error']['code'] == 'account_deactivated':
                     invalidate_key(key)
-                    continue
+                    return proxy_api(method, content, path, json_data, params, is_stream, files)
             pattern = r"completion(s)?"
             matches = re.findall(pattern, actual_path)
+            contentjson = json.loads(content)
             print(respjs)
             if matches and respjs.get('usage'):
                 patternchat = r"/?chat/?"
