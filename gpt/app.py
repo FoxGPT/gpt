@@ -100,8 +100,9 @@ def api_proxy(subpath):
         # check if engine is gpt-4
         print(content)
         contentjson = json.loads(content)
-        if 'gpt-4' in subpath or contentjson['model'] == 'gpt-4':
-            return flask.Response('{"error": {"code": "unauthorized_gpt_4", "message": "You are not allowed to use GPT-4."}}', 403)
+        if contentjson.get('model'):
+            if 'gpt-4' in subpath or contentjson['model'] == 'gpt-4':
+                return flask.Response('{"error": {"code": "unauthorized_gpt_4", "message": "You are not allowed to use GPT-4."}}', 403)
         if is_stream:
             status_code, lines = ai.proxy_api(
                     method=method,
