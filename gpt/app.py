@@ -98,15 +98,17 @@ def api_proxy(subpath):
 
     try:
         if is_stream:
-            return flask.Response(
-                ai.proxy_api(
+            status_code, lines = ai.proxy_api(
                     method=method,
                     content=content,
                     path=subpath,
                     json_data=json_data,
                     params=params,
                     is_stream=True
-                ),
+                )
+            return flask.Response(
+                lines,
+                status_code,
                 mimetype='text/event-stream',
             )
         else:

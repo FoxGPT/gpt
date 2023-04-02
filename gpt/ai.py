@@ -5,6 +5,7 @@ import requests
 import re
 from dotenv import load_dotenv
 load_dotenv()
+from flask import Flask,request,redirect,Response
 
 # In the file defined as "WORKING_FILE", you should have a list of OpenAI API keys, one per line.
 # Not all of them have to be valid, but it will make the script run faster.
@@ -88,9 +89,11 @@ def add_tokens(key: str, tokensnum: int):
 
 
 def proxy_stream(resp):
-    for line in resp.iter_lines():
-        if line:
-            yield f'{line.decode("utf8")}\n\n'
+    def generate_lines():
+        for line in resp.iter_lines():
+            if line:
+                yield f'{line.decode("utf8")}\n\n'
+    return resp.status_code, generate_lines()
 
 def proxy_api(method, content, path, json_data, params, is_stream: bool=False, files=None):
     """Makes a request to the official API"""
@@ -137,20 +140,21 @@ def proxy_api(method, content, path, json_data, params, is_stream: bool=False, f
             return proxy_stream(resp)
  
         else:
-            resp = resp.json()
+            respjs = resp.json()
 
-            if resp.get('error'):
-                if resp['error']['code'] == 'invalid_api_key' or 'exceeded' in resp['error']['message'] or resp['error']['code'] == 'account_deactivated':
+            if respjs.get('error'):
+                if respjs['error']['code'] == 'invalid_api_key' or 'exceeded' in respjs['error']['message'] or respjs['error']['code'] == 'account_deactivated':
                     invalidate_key(key)
                     continue
             pattern = r"completion(s)?"
             matches = re.findall(pattern, actual_path)
-            print(resp)
-            if matches and resp.get('usage'):
+            print(respjs)
+            if matches and respjs.get('usage'):
                 patternchat = r"/?chat/?"
                 matcheschat = re.findall(patternchat, actual_path)
                 if matcheschat:
-                    add_tokens('chat', resp['usage']['total_tokens'])
+                    add_tokens('chat', respjs['usage']['total_tokens'])
                 else:
-                    add_tokens('text', resp['usage']['total_tokens'])
+                    add_tokens('text', respjs['usage']['total_tokens'])
+            resp = Response(resp.content, resp.status_code)
             return resp
