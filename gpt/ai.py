@@ -140,7 +140,7 @@ def proxy_api(method, content, path, json_data, params, is_stream: bool=False, f
             resp = resp.json()
 
             if resp.get('error'):
-                if resp['error']['code'] == 'invalid_api_key' or 'exceeded' in resp['error']['message']:
+                if resp['error']['code'] == 'invalid_api_key' or 'exceeded' in resp['error']['message'] or resp['error']['code'] == 'account_deactivated':
                     invalidate_key(key)
                     continue
             pattern = r"completion(s)?"
