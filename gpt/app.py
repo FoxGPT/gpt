@@ -158,7 +158,7 @@ def api_proxy(subpath):
 
         return flask.Response(
             {
-            'error': 'Sorry, an error occurred. Please contact us: https://discord.gg/SCymptZmUK'
+            'error': 'Sorry, an error occurred. Please contact us: https://discord.gg/E8E2TnE75D'
             },
             status=500,
             mimetype='application/json'

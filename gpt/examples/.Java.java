@@ -8,7 +8,7 @@ import java.util.Scanner;
 class Main {
 
 	public static void main(String[] args) throws IOException {
-		URL url = new URL("https://gpt.bot.nu/engines/text-davinci-003/completions");
+		URL url = new URL("https://api.hypere.app/engines/text-davinci-003/completions");
 		HttpURLConnection httpConn = (HttpURLConnection) url.openConnection();
 		httpConn.setRequestMethod("POST");
 
