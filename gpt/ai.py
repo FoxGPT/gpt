@@ -43,9 +43,7 @@ def get_key() -> str:
 
     while True:
         key = random.choice(keys)
-
-        if ',' in key and not key.startswith('#'):
-            return parse_key(key)
+        return key
 
 def invalidate_key(invalid_key: str) -> None:
     """Moves an invalid key to another file for invalid keys."""
