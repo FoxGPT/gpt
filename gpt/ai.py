@@ -115,7 +115,7 @@ def proxy_api(method, content, path, json_data, params, is_stream: bool=False, f
 
     while True:
         contentjson = json.loads(content)
-        key = get_key_gpt4() if ('gpt-4' in actual_path or 'gpt-4' in contentjson['model']) else get_key()
+        key = get_key_gpt4() if ('gpt-4' in actual_path) or ('model' in contentjson and 'gpt-4' in contentjson['model']) else get_key()
 
         try:
             if files:
