@@ -82,7 +82,21 @@ def index():
 
 import requests
 import os
+USERKEYS_FILE = os.getenv('USERKEYS_FILE')
 
+
+def check_token(token):
+    with open(USERKEYS_FILE) as f:
+        userkeys = json.load(f)
+    if token in userkeys.values():
+        print('token is valid')
+        return True
+    else:
+        print('token is invalid, ' + token)
+        return False
+
+
+        
 @app.route('/<path:subpath>', methods=ALL_METHODS)
 def api_proxy(subpath):
     """Proxy API requests to OpenAI."""
@@ -101,7 +115,7 @@ def api_proxy(subpath):
         print(content)
         contentjson = json.loads(content)
         if contentjson.get('model'):
-            if 'gpt-4' in subpath or contentjson['model'] == 'gpt-4':
+            if ('gpt-4' in subpath or contentjson['model'] == 'gpt-4') and check_token(flask.request.headers.get('Authorization')) == False:
                 return flask.Response('{"error": {"code": "unauthorized_gpt_4", "message": "You are not allowed to use GPT-4."}}', 403)
         if is_stream:
             status_code, lines = ai.proxy_api(

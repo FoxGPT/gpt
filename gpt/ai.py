@@ -21,6 +21,7 @@ from flask import Flask,request,redirect,Response
 # You can comment out keys by adding a # at the beginning of the line.
 
 WORKING_FILE = os.getenv('WORKING_FILE')
+GPT4_FILE = os.getenv('GPT4_FILE')
 
 # This file will be used to store the invalid keys.
 # Don't worry about it, it will be created automatically.
@@ -44,7 +45,14 @@ def get_key() -> str:
     while True:
         key = random.choice(keys)
         return key
+def get_key_gpt4() -> str:
+    """Get a random key from the working file."""
+    with open(GPT4_FILE, encoding='utf8') as keys_file:
+        keys = keys_file.read().splitlines()
 
+    while True:
+        key = random.choice(keys)
+        return key
 def invalidate_key(invalid_key: str) -> None:
     """Moves an invalid key to another file for invalid keys."""
     with open(WORKING_FILE, 'r') as source:
@@ -93,6 +101,7 @@ def proxy_stream(resp):
                 yield f'{line.decode("utf8")}\n\n'
     return resp.status_code, generate_lines()
 
+
 def proxy_api(method, content, path, json_data, params, is_stream: bool=False, files=None):
     """Makes a request to the official API"""
     actual_path = path.replace('v1/', '')
@@ -105,7 +114,8 @@ def proxy_api(method, content, path, json_data, params, is_stream: bool=False, f
             pass
 
     while True:
-        key = get_key()
+        contentjson = json.loads(content)
+        key = get_key_gpt4() if ('gpt-4' in actual_path or 'gpt-4' in contentjson['model']) else get_key()
 
         try:
             if files:
@@ -141,9 +151,6 @@ def proxy_api(method, content, path, json_data, params, is_stream: bool=False, f
             respjs = resp.json()
 
             if respjs.get('error'):
-                if 'chat model' in respjs['error']['message']:
-                    print("gpt-4")
-                    print(key)
                 if respjs['error']['code'] == 'invalid_api_key' or 'exceeded' in respjs['error']['message'] or respjs['error']['code'] == 'account_deactivated' or respjs['error']['code'] == 'billing_not_active':
                     invalidate_key(key)
                     return proxy_api(method, content, path, json_data, params, is_stream, files)
