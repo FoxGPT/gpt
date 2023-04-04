@@ -120,17 +120,21 @@ def proxy_api(method, content, path, json_data, params, is_stream: bool=False, f
             add_stat('*')
             pattern = r"generation(s)?"
             matches = re.findall(pattern, actual_path)
-            contentjson = json.loads(content)
-            print(contentjson)
-            if matches and contentjson.get('prompt'):
-                if 'n' in contentjson:
-                    print(contentjson['n'])
-                    add_stat(actual_path, contentjson['n'])
+            if not files:
+                contentjson = json.loads(content)
+                print(contentjson)
+                if matches and contentjson.get('prompt'):
+                    if 'n' in contentjson:
+                        print(contentjson['n'])
+                        add_stat(actual_path, contentjson['n'])
+                    else:
+                        add_stat(actual_path)
                 else:
                     add_stat(actual_path)
             else:
                 add_stat(actual_path)
-            
+
+                
         except json.JSONDecodeError:
             pass
 
