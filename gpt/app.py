@@ -147,7 +147,7 @@ def api_proxy(subpath):
         print(content)
         file = flask.request.files.get('file')
 
-        if file:
+        if not file:
             contentjson = json.loads(content)
             if 'model' in contentjson:
                 if ('gpt-4' in subpath or 'gpt-4' in contentjson['model']) and check_token(flask.request.headers.get('Authorization')) == False:
