@@ -66,8 +66,8 @@ def get_tokens():
     with open('tokens.json', 'r') as tokens_file:
         tokens = json.loads(tokens_file.read())
     tokens = {
-        'total': tokens['text'] + tokens['chat'],
-        'chat': tokens['chat'],
+        'total': tokens['text'] + tokens['chat']+ tokens['gpt4'],
+        'chat': tokens['chat']+ tokens['gpt4'],
         'text': tokens['text']
     }
     return tokens
@@ -94,7 +94,7 @@ def index():
 import requests
 import os
 USERKEYS_FILE = os.getenv('USERKEYS_FILE')
-
+STATS_AUTH = os.getenv('STATS_AUTH')
 
 def check_token(token):
     with open(USERKEYS_FILE) as f:
@@ -106,6 +106,22 @@ def check_token(token):
         print('token is invalid, ' + token)
         return False
 
+@app.route('/stats', methods=['GET'])
+def stats():
+    if flask.request.headers.get('Authorization') == STATS_AUTH:
+        tokens = json.load(open('tokens.json'))
+        stats = json.load(open('stats.json'))
+        total = (
+            stats['images/generations'] * 0.02 +
+            tokens['gpt4']//1000 * 0.06 +
+            tokens['chat']//1000 * 0.002 +
+            tokens['text']//1000 * 0.02 +
+            stats['audio/transcriptions'] * 0.006 +
+            ((stats['*'] - stats['chat/completions'] - stats['engines/gpt-3.5-turbo/chat/completions'] - stats['engines/text-davinci-003/completions'] - stats['images/generations'] - stats['audio/transcriptions'] - stats['engines/gpt-3.5-turbo/completions']) // 1000 * 0.0004)
+        )
+        return str(total)
+    else:
+        return 'unauthorized', 401
 
         
 @app.route('/<path:subpath>', methods=ALL_METHODS)
