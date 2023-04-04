@@ -183,7 +183,7 @@ def proxy_api(method, content, path, json_data, params, is_stream: bool=False, f
             pattern = r"completion(s)?"
             matches = re.findall(pattern, actual_path)
             if not files:
-            contentjson = json.loads(content)
+                contentjson = json.loads(content)
                 if matches and respjs.get('usage'):
                     patternchat = r"/?chat/?"
                     matcheschat = re.findall(patternchat, actual_path)
