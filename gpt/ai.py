@@ -139,8 +139,9 @@ def proxy_api(method, content, path, json_data, params, is_stream: bool=False, f
             pass
 
     while True:
-        contentjson = json.loads(content)
-        key = get_key_gpt4() if ('gpt-4' in actual_path) or ('model' in contentjson and 'gpt-4' in contentjson['model']) else get_key()
+        if not files:
+            contentjson = json.loads(content)
+        key = get_key_gpt4() if ('gpt-4' in actual_path) or (not files and 'model' in contentjson and 'gpt-4' in contentjson['model']) else get_key()
 
         try:
             if files:
@@ -181,19 +182,20 @@ def proxy_api(method, content, path, json_data, params, is_stream: bool=False, f
                     return proxy_api(method, content, path, json_data, params, is_stream, files)
             pattern = r"completion(s)?"
             matches = re.findall(pattern, actual_path)
+            if not files:
             contentjson = json.loads(content)
-            if matches and respjs.get('usage'):
-                patternchat = r"/?chat/?"
-                matcheschat = re.findall(patternchat, actual_path)
-                if 'model' in contentjson:
-                    pattern4 = r"gpt-4"
-                    matches4 = re.findall(pattern4, contentjson['model'])
-                    if matches4:
-                        add_tokens('gpt4', respjs['usage']['total_tokens'])
-                    elif matcheschat:
-                        add_tokens('chat', respjs['usage']['total_tokens'])
-                    else:
-                        add_tokens('text', respjs['usage']['total_tokens'])
+                if matches and respjs.get('usage'):
+                    patternchat = r"/?chat/?"
+                    matcheschat = re.findall(patternchat, actual_path)
+                    if 'model' in contentjson:
+                        pattern4 = r"gpt-4"
+                        matches4 = re.findall(pattern4, contentjson['model'])
+                        if matches4:
+                            add_tokens('gpt4', respjs['usage']['total_tokens'])
+                        elif matcheschat:
+                            add_tokens('chat', respjs['usage']['total_tokens'])
+                        else:
+                            add_tokens('text', respjs['usage']['total_tokens'])
 
             resp = Response(resp.content, resp.status_code)
             return resp
