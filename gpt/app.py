@@ -6,7 +6,7 @@ import openai
 import traceback
 import requests
 import ai
-
+from flask import jsonify
 from dotenv import load_dotenv
 from werkzeug.middleware.proxy_fix import ProxyFix
 
@@ -107,6 +107,7 @@ def check_token(token):
         return False
 
 @app.route('/stats', methods=['GET'])
+
 def stats():
     if flask.request.headers.get('Authorization') == STATS_AUTH:
         tokens = json.load(open('tokens.json'))
@@ -119,7 +120,11 @@ def stats():
             stats['audio/transcriptions'] * 0.006 +
             ((stats['*'] - stats['chat/completions'] - stats['engines/gpt-3.5-turbo/chat/completions'] - stats['engines/text-davinci-003/completions'] - stats['images/generations'] - stats['audio/transcriptions'] - stats['engines/gpt-3.5-turbo/completions']) // 1000 * 0.0004)
         )
-        return str(total)
+        response_data = {
+            "totalcost": total,
+            "totalrequests": stats['*']
+        }
+        return jsonify(response_data)
     else:
         return 'unauthorized', 401
 
