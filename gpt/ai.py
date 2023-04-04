@@ -151,7 +151,7 @@ def proxy_api(method, content, path, json_data, params, is_stream: bool=False, f
             respjs = resp.json()
 
             if respjs.get('error'):
-                if respjs['error']['code'] == 'invalid_api_key' or 'exceeded' in respjs['error']['message'] or respjs['error']['code'] == 'account_deactivated' or respjs['error']['code'] == 'billing_not_active':
+                if respjs['error']['code'] == 'invalid_api_key' or 'exceeded' in respjs['error']['message'] or respjs['error']['code'] == 'account_deactivated' or 'Your account is not active' in respjs['error']['message']:
                     invalidate_key(key)
                     return proxy_api(method, content, path, json_data, params, is_stream, files)
             pattern = r"completion(s)?"
