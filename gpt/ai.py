@@ -72,7 +72,7 @@ def invalidate_key(invalid_key: str) -> None:
     with open(INVALID_FILE, 'a') as invalid:
         invalid.write(f'{unparse(invalid_key)}\n')
 
-def add_stat(key: str):
+def add_stat(key: str, num = 1):
     """Add +1 to the specified statistic"""
     with open('stats.json', 'r') as stats_file:
         stats = json.loads(stats_file.read())
@@ -81,7 +81,7 @@ def add_stat(key: str):
         if not stats.get(key):
             stats[key] = 0
 
-        stats[key] += 1
+        stats[key] += num
         json.dump(stats, stats_file)
 def add_tokens(key: str, tokensnum: int):
     """Add +1 to the specified statistic"""
@@ -109,7 +109,19 @@ def proxy_api(method, content, path, json_data, params, is_stream: bool=False, f
     if '/' in actual_path:
         try:
             add_stat('*')
-            add_stat(actual_path)
+            pattern = r"generation(s)?"
+            matches = re.findall(pattern, actual_path)
+            contentjson = json.loads(content)
+            print(contentjson)
+            if matches and contentjson.get('prompt'):
+                if 'n' in contentjson:
+                    print(contentjson['n'])
+                    add_stat(actual_path, contentjson['n'])
+                else:
+                    add_tokens(actual_path)
+            else:
+                add_stat(actual_path)
+            
         except json.JSONDecodeError:
             pass
 
@@ -157,7 +169,6 @@ def proxy_api(method, content, path, json_data, params, is_stream: bool=False, f
             pattern = r"completion(s)?"
             matches = re.findall(pattern, actual_path)
             contentjson = json.loads(content)
-            print(respjs)
             if matches and respjs.get('usage'):
                 patternchat = r"/?chat/?"
                 matcheschat = re.findall(patternchat, actual_path)
@@ -165,5 +176,6 @@ def proxy_api(method, content, path, json_data, params, is_stream: bool=False, f
                     add_tokens('chat', respjs['usage']['total_tokens'])
                 else:
                     add_tokens('text', respjs['usage']['total_tokens'])
+
             resp = Response(resp.content, resp.status_code)
             return resp

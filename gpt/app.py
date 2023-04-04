@@ -53,13 +53,24 @@ def get_stats():
 
     stats = {
         'total': stats['*'],
-        'chat': stats['chat/completions'] + stats['engines/gpt-3.5-turbo/chat/completions'],
+        'chat': stats['chat/completions'] + stats['engines/gpt-3.5-turbo/chat/completions'] + stats['engines/gpt-3.5-turbo/completions'],
         'text': stats['engines/text-davinci-003/completions'],
         'image': stats['images/generations'],
         'audio': stats['audio/transcriptions'],
+        'other' : stats['*'] - stats['chat/completions'] - stats['engines/gpt-3.5-turbo/chat/completions'] - stats['engines/text-davinci-003/completions'] - stats['images/generations'] - stats['audio/transcriptions'] - stats['engines/gpt-3.5-turbo/completions']
     }
     return stats
 
+def get_tokens():
+    """Returns the tokens for the API usage."""
+    with open('tokens.json', 'r') as tokens_file:
+        tokens = json.loads(tokens_file.read())
+    tokens = {
+        'total': tokens['text'] + tokens['chat'],
+        'chat': tokens['chat'],
+        'text': tokens['text']
+    }
+    return tokens
 # SEO, etc.
 
 @app.route('/robots.txt')
@@ -78,7 +89,7 @@ def favicon():
 
 @app.route('/')
 def index():
-    return flask.render_template('index.html', examples=get_examples(), rate_limits=RATE_LIMITS, stats=get_stats(), title='Home')
+    return flask.render_template('index.html', examples=get_examples(), rate_limits=RATE_LIMITS, stats=get_stats(), tokens=get_tokens(), title='Home')
 
 import requests
 import os

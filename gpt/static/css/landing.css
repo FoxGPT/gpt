@@ -102,26 +102,61 @@ section.landing div.stats {
   margin-top: 8rem;
   display: flex;
   justify-content: space-between;
+  align-items: flex-start; /* Align the items to the top */
 }
 section.landing div.stats div.stat {
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-right: 2rem; /* Add margin to all elements except the last one */
 }
+
+section.landing div.stats div.stat:last-child {
+  margin-right: 0; /* Remove margin from the last element */
+}
+
 section.landing div.stats div.stat span.number {
   font-size: 36px;
-  margin-block: 1rem;
   font-weight: 800;
 }
+
 section.landing div.stats div.stat span.label {
   opacity: 0.7;
+  margin:auto;
+  margin-top: 0.5rem; /* Reduce the margin-top value */
 }
+
+section.landing div.stats div.stat span.tokens {
+  opacity: 0.7;
+  margin:auto;
+  margin-top:5px;
+}
+
 section.landing div.stats div.stat svg {
   height: 40px;
   width: 40px;
   display: block;
   opacity: 0.8;
+  margin:auto;
 }
+
+@media (max-width: 767px) {
+  section.landing div.stats {
+    flex-wrap: wrap;
+    justify-content: center; /* Center the elements on mobile */
+  }
+
+  section.landing div.stats div.stat {
+    margin-right: 0; /* Remove the margin on mobile */
+    margin-bottom: 2rem; /* Add some space between the elements on mobile */
+  }
+
+  section.landing div.stats div.stat:last-child {
+    margin-bottom: 0; /* Remove the margin-bottom from the last element */
+  }
+}
+
+
 
 @media (max-width: 1600px) {
   div.blend {
