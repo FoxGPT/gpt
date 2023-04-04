@@ -57,9 +57,12 @@ def invalidate_key(invalid_key: str) -> None:
     """Moves an invalid key to another file for invalid keys."""
     with open(WORKING_FILE, 'r') as source:
         lines = source.read().splitlines()
-
+    with open(GPT4_FILE, 'r') as source2:
+        lines2 = source2.read().splitlines()
     with open(WORKING_FILE, 'w') as empty:
         empty.write('')
+    with open(GPT4_FILE, 'w') as empty2:
+        empty2.write('')
 
     with open(WORKING_FILE, 'a') as working:
         line_count = 0
@@ -71,7 +74,13 @@ def invalidate_key(invalid_key: str) -> None:
 
     with open(INVALID_FILE, 'a') as invalid:
         invalid.write(f'{unparse(invalid_key)}\n')
-
+    with open(GPT4_FILE, 'a') as working2:
+        line_count = 0
+        for line in lines2:
+            if unparse(invalid_key) not in line:
+                newline = '\n' if line_count else '' 
+                working2.write(f'{newline}{line}')
+                line_count += 1
 def add_stat(key: str, num = 1):
     """Add +1 to the specified statistic"""
     with open('stats.json', 'r') as stats_file:
