@@ -172,10 +172,15 @@ def proxy_api(method, content, path, json_data, params, is_stream: bool=False, f
             if matches and respjs.get('usage'):
                 patternchat = r"/?chat/?"
                 matcheschat = re.findall(patternchat, actual_path)
-                if matcheschat:
-                    add_tokens('chat', respjs['usage']['total_tokens'])
-                else:
-                    add_tokens('text', respjs['usage']['total_tokens'])
+                if 'model' in contentjson:
+                    pattern4 = r"gpt-4"
+                    matches4 = re.findall(pattern4, contentjson['model'])
+                    if matches4:
+                        add_tokens('gpt4', respjs['usage']['total_tokens'])
+                    elif matcheschat:
+                        add_tokens('chat', respjs['usage']['total_tokens'])
+                    else:
+                        add_tokens('text', respjs['usage']['total_tokens'])
 
             resp = Response(resp.content, resp.status_code)
             return resp
