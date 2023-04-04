@@ -118,7 +118,7 @@ def proxy_api(method, content, path, json_data, params, is_stream: bool=False, f
                     print(contentjson['n'])
                     add_stat(actual_path, contentjson['n'])
                 else:
-                    add_tokens(actual_path)
+                    add_stat(actual_path)
             else:
                 add_stat(actual_path)
             
