@@ -96,15 +96,14 @@ import os
 USERKEYS_FILE = os.getenv('USERKEYS_FILE')
 STATS_AUTH = os.getenv('STATS_AUTH')
 
-def check_token(token):
-    with open(USERKEYS_FILE) as f:
-        userkeys = json.load(f)
-    if token in userkeys.values():
-        print('token is valid')
-        return True
-    else:
-        print('token is invalid, ' + token)
-        return False
+def check_token(key):
+    with open(USERKEYS_FILE, 'r') as f:
+        data = json.load(f)
+    for user_id, values in data.items():
+        if values['key'] == key:
+            return user_id
+    
+    return False
 
 @app.route('/stats', methods=['GET'])
 
@@ -159,7 +158,8 @@ def api_proxy(subpath):
                     path=subpath,
                     json_data=json_data,
                     params=params,
-                    is_stream=True
+                    is_stream=True,
+                    auth=flask.request.headers.get('Authorization') if check_token(flask.request.headers.get('Authorization')) else None
                 )
             return flask.Response(
                 lines,
@@ -203,7 +203,8 @@ def api_proxy(subpath):
                     path=subpath,
                     json_data=json_data,
                     params=params,
-                    is_stream=False
+                    is_stream=False,
+                    auth=flask.request.headers.get('Authorization') if check_token(flask.request.headers.get('Authorization')) else None
                 )
                 return prox_resp
 

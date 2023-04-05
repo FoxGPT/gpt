@@ -26,6 +26,7 @@ GPT4_FILE = os.getenv('GPT4_FILE')
 # This file will be used to store the invalid keys.
 # Don't worry about it, it will be created automatically.
 INVALID_FILE = os.getenv('INVALID_FILE')
+USERKEYS_FILE = os.getenv('USERKEYS_FILE')
 
 # By default, the file paths for the WOR
 
@@ -102,7 +103,28 @@ def add_tokens(key: str, tokensnum: int):
     with open('tokens.json', 'w') as tokens_out_file:
         json.dump(tokens, tokens_out_file)
 
+def check_token(key):
+    with open(USERKEYS_FILE, 'r') as f:
+        data = json.load(f)
+    for user_id, values in data.items():
+        if values['key'] == key:
+            return user_id
+    
+    return False
 
+def add_usage(key:str, prompt, completion):
+    """Add the completion and prompt tokens to the user's GPT-4 key usage"""
+    with open(USERKEYS_FILE, 'r') as f:
+        data = json.load(f)
+    for user_id, values in data.items():
+        if values['key'] == key:
+            values['prompttokens'] += int(prompt)
+            values['completiontokens'] += int(completion)
+            break  # Exit loop once we have updated the user's data
+
+    with open(USERKEYS_FILE, 'w') as keys_out_file:
+        json.dump(data, keys_out_file)  # Write the updated data back to the file
+    
 def proxy_stream(resp):
     def generate_lines():
         for line in resp.iter_lines():
@@ -111,7 +133,7 @@ def proxy_stream(resp):
     return resp.status_code, generate_lines()
 
 
-def proxy_api(method, content, path, json_data, params, is_stream: bool=False, files=None):
+def proxy_api(method, content, path, json_data, params, is_stream: bool=False, files=None, auth=None):
     """Makes a request to the official API"""
     actual_path = path.replace('v1/', '')
 
@@ -192,6 +214,8 @@ def proxy_api(method, content, path, json_data, params, is_stream: bool=False, f
                         matches4 = re.findall(pattern4, contentjson['model'])
                         if matches4:
                             add_tokens('gpt4', respjs['usage']['total_tokens'])
+                            if auth:
+                                add_usage(auth, respjs['usage']['prompt_tokens'], respjs['usage']['completion_tokens'])
                         elif matcheschat:
                             add_tokens('chat', respjs['usage']['total_tokens'])
                         else:
