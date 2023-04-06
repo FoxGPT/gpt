@@ -170,7 +170,7 @@ def proxy_api(method, content, path, json_data, params, is_stream: bool=False, f
                 print("hi")
                 resp = requests.post(f'https://api.openai.com/v1/{actual_path}', headers={
                         'Authorization': f'Bearer {key}',
-                }, files=files, params=params)
+                }, files=files, params=params, timeout=360)
             else:
                 resp = requests.request(
                     method=method,
@@ -183,7 +183,7 @@ def proxy_api(method, content, path, json_data, params, is_stream: bool=False, f
                     json=json_data,
                     params=params,
                     
-                    timeout=90,
+                    timeout=360,
                     stream=is_stream
                 )
                 print(resp)
