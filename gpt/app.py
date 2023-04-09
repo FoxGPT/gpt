@@ -129,7 +129,15 @@ def stats():
     else:
         return 'unauthorized', 401
 
-        
+@app.after_request
+def after_request(response):
+    header = response.headers
+    header['Access-Control-Allow-Origin'] = '*'
+    header['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE, OPTIONS'
+    header['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
+    return response
+
+
 @app.route('/<path:subpath>', methods=ALL_METHODS)
 def api_proxy(subpath):
     """Proxy API requests to OpenAI."""
