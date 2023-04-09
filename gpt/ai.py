@@ -68,17 +68,17 @@ def invalidate_key(invalid_key: str) -> None:
     with open(WORKING_FILE, 'a') as working:
         line_count = 0
         for line in lines:
-            if unparse(invalid_key) not in line:
+            if invalid_key not in line:
                 newline = '\n' if line_count else '' 
                 working.write(f'{newline}{line}')
                 line_count += 1
 
     with open(INVALID_FILE, 'a') as invalid:
-        invalid.write(f'{unparse(invalid_key)}\n')
+        invalid.write(f'{invalid_key}\n')
     with open(GPT4_FILE, 'a') as working2:
         line_count = 0
         for line in lines2:
-            if unparse(invalid_key) not in line:
+            if invalid_key not in line:
                 newline = '\n' if line_count else '' 
                 working2.write(f'{newline}{line}')
                 line_count += 1

@@ -9,7 +9,7 @@ import ai
 from flask import jsonify
 from dotenv import load_dotenv
 from werkzeug.middleware.proxy_fix import ProxyFix
-
+from flask_cors import CORS
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
 
@@ -164,7 +164,7 @@ def api_proxy(subpath):
             return flask.Response(
                 lines,
                 status_code,
-                mimetype='text/event-stream',
+                mimetype='text/event-stream'
             )
         else:
             # If file is attached, send it along with the request
