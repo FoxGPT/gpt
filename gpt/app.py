@@ -88,7 +88,7 @@ def favicon():
 
 # ====
 
-@app.route('/')
+@app.route('/', methods=ALL_METHODS)
 def index():
     return flask.render_template('index.html', examples=get_examples(), rate_limits=RATE_LIMITS, stats=get_stats(), tokens=get_tokens(), title='Home')
 
