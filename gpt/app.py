@@ -129,12 +129,12 @@ def stats():
     else:
         return 'unauthorized', 401
 
-@app.after_request
-def after_request(response):
-    header = response.headers
-    header['Access-Control-Allow-Origin'] = '*'
-    header['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE, OPTIONS'
-    header['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
+@app.route('/<path:subpath>', methods=['OPTIONS'])
+def handle_options(subpath):
+    response = flask.make_response()
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    response.headers.add('Access-Control-Allow-Methods', 'POST, GET, OPTIONS')
+    response.headers.add('Access-Control-Allow-Headers', 'Authorization, Content-Type')
     return response
 
 
