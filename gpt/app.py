@@ -134,8 +134,15 @@ def stats():
 def api_proxy(subpath):
     """Proxy API requests to OpenAI."""
     if not 'audio' in subpath:
-        with open('req.log', 'a') as req_log:
-            req_log.write(f'{flask.request.data} {flask.request.get_json()}\n')
+        # log requests. before logging, check if the size of req.log is higher than 100mb. if so, delete it.
+        if os.path.getsize('req.log') > 100000000:
+            os.remove('req.log')
+            # create a new file
+            with open('req.log', 'w') as req_log:
+                req_log.write(f'{flask.request.data} {flask.request.get_json()}\n')  
+        else:        
+            with open('req.log', 'a') as req_log:
+                req_log.write(f'{flask.request.data} {flask.request.get_json()}\n')
 
     params = flask.request.args.copy()
     method = flask.request.method
