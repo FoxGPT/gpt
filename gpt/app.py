@@ -132,9 +132,9 @@ def stats():
 @app.route('/<path:subpath>', methods=['OPTIONS'])
 def handle_options(subpath):
     response = flask.make_response()
-    response.headers.add('Access-Control-Allow-Origin', '*')
-    response.headers.add('Access-Control-Allow-Methods', 'POST, GET, OPTIONS')
-    response.headers.add('Access-Control-Allow-Headers', 'Authorization, Content-Type')
+    response.headers.set('Access-Control-Allow-Origin', '*')
+    response.headers.set('Access-Control-Allow-Methods', 'POST, GET, OPTIONS')
+    response.headers.set('Access-Control-Allow-Headers', 'Authorization, Content-Type')
     return response
 
 
