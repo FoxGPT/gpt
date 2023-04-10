@@ -128,7 +128,7 @@ def add_usage(key:str, prompt, completion):
 def proxy_stream(resp):
     def generate_lines():
         buffer = ''
-        for chunk in resp.iter_content(chunk_size=8192, decode_unicode=True):
+        for chunk in resp.iter_content(chunk_size=8192, decode_unicode=False):
             if chunk:
                 buffer += chunk
                 while '\n' in buffer:
