@@ -127,13 +127,9 @@ def add_usage(key:str, prompt, completion):
     
 def proxy_stream(resp):
     def generate_lines():
-        buffer = ''
-        for chunk in resp.iter_content(chunk_size=8192, decode_unicode=False):
-            if chunk:
-                buffer += chunk
-                while '\n' in buffer:
-                    line, buffer = buffer.split('\n', 1)
-                    yield f'{line}\n\n'
+        for line in resp.iter_lines():
+            if line:
+                yield f'{line.decode("utf8")}\n\n'
     return resp.status_code, generate_lines()
 
 def add_ip_tokens(ip, num_tokens):
