@@ -12,12 +12,16 @@ from werkzeug.middleware.proxy_fix import ProxyFix
 from flask_cors import CORS
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
+from flask_ipban import IpBan
+
 
 RATE_LIMITS = ['40000 per day', '4000 per hour', '100 per minute', '10 per second']
 ALL_METHODS = ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS', 'HEAD']
 
 load_dotenv()
 app = flask.Flask(__name__)
+ip_ban = IpBan(persist=True, record_dir='ipban')
+ip_ban.init_app(app)
 CORS(app)
 app.wsgi_app = ProxyFix(app.wsgi_app)
 
@@ -86,6 +90,58 @@ def sitemap():
 @app.route('/favicon.ico')
 def favicon():
     return flask.Response('', mimetype='image/x-icon')
+
+
+@app.route('/block/<path:ip>')
+def block_it(ip):
+    if (flask.request.headers.get('Authorization') == os.getenv('BLOCK_AUTH')):
+        url_params = flask.request.args
+        # Retrieve parameters using get() 
+        perm = True if url_params.get('perm') == 'true' else False
+        if perm:
+
+            ip_ban.block([ip], permanent=True)
+            return 'ok'
+        else:
+            ip_ban.block([ip])
+            return 'ok'
+    else:
+        return flask.Response('Unauthorized: You are not admin.', 401)
+
+
+@app.route('/unblock/<path:ip>')
+def un_block_it(ip):
+    ''' Remove an IP from the blacklist '''
+    if (flask.request.headers.get('Authorization') == os.getenv('BLOCK_AUTH')):
+        ip_ban.remove(ip)
+        return 'ok'
+    else:
+        return flask.Response('Unauthorized: You are not admin.', 401)
+
+@app.route('/whitelist/<string:ip>', methods=['PUT', 'DELETE'])
+def whitelist_ip(ip):
+    ''' Add or remove an IP from the whitelist '''
+    if (flask.request.headers.get('Authorization') == os.getenv('BLOCK_AUTH')):
+        result = 'error: unknown method'
+        if request.method == 'PUT':
+            result = 'Added.  {} entries in the whitelist'.format(ip_ban.ip_whitelist_add(ip))
+        elif request.method == 'DELETE':
+            result = '{} removed'.format(ip) if ip_ban.ip_whitelist_remove(ip) else '{} not in whitelist'.format(ip)
+        return result
+    else:
+        return flask.Response('Unauthorized: You are not admin.', 401)
+
+@app.route('/listblocked')
+def listblocked():
+    ''' List all blocked IPs '''
+    if (flask.request.headers.get('Authorization') == os.getenv('BLOCK_AUTH')):
+        blocklist = ip_ban.get_block_list()
+        if len(blocklist) == 0:
+            return 'No blocked IPs'
+        else:
+            return blocklist
+    else:
+        return flask.Response('Unauthorized: You are not admin.', 401)
 
 # ====
 
@@ -266,5 +322,5 @@ def playground_api():
     )
 
     return img.data[0].url
-
-app.run(port=7711, debug=True)
+if __name__ == "__main__":
+    app.run(host='0.0.0.0', port=7711, debug=True)
