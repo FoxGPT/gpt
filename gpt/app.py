@@ -222,8 +222,10 @@ def api_proxy(subpath):
 
         if not file:
             contentjson = json.loads(content)
+            auth_header = flask.request.headers.get('Authorization')
+            auth_token = auth_header.replace("Bearer ", "") if (auth_header is not None and auth_header.startswith("Bearer ")) else None
             if 'model' in contentjson:
-                if ('gpt-4' in subpath or 'gpt-4' in contentjson['model']) and check_token(flask.request.headers.get('Authorization')) == False:
+                if ('gpt-4' in subpath or 'gpt-4' in contentjson['model']) and check_token(auth_token) == False:
                     return flask.Response('{"error": {"code": "unauthorized_gpt_4", "message": "You are not allowed to use GPT-4."}}', 403)
         if is_stream:
             status_code, lines = ai.proxy_api(
@@ -233,7 +235,7 @@ def api_proxy(subpath):
                     json_data=json_data,
                     params=params,
                     is_stream=True,
-                    auth=flask.request.headers.get('Authorization') if check_token(flask.request.headers.get('Authorization')) else None,
+                    auth=auth_token,
                     ip=ip_address
                 )
             return flask.Response(
@@ -279,7 +281,7 @@ def api_proxy(subpath):
                     json_data=json_data,
                     params=params,
                     is_stream=False,
-                    auth=flask.request.headers.get('Authorization') if check_token(flask.request.headers.get('Authorization')) else None,
+                    auth=auth_token,
                     ip=ip_address
                 )
                 return prox_resp
