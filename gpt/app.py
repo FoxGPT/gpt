@@ -15,7 +15,7 @@ from flask_limiter.util import get_remote_address
 from flask_ipban import IpBan
 
 
-RATE_LIMITS = ['40000 per day', '4000 per hour', '100 per minute', '10 per second']
+RATE_LIMITS = ['30000 per day', '2000 per hour', '60 per minute', '5 per second']
 ALL_METHODS = ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS', 'HEAD']
 
 load_dotenv()
