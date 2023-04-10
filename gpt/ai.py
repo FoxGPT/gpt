@@ -231,8 +231,6 @@ def proxy_api(method, content, path, json_data, params, is_stream: bool=False, f
                         elif matcheschat:
                             add_tokens('chat', respjs['usage']['total_tokens'])
                             if ip:
-                                print(respjs['usage']['total_tokens'])
-                                print(ip)
                                 add_ip_tokens(ip, respjs['usage']['total_tokens'])
                         else:
                             add_tokens('text', respjs['usage']['total_tokens'])
