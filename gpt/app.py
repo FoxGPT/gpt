@@ -232,7 +232,8 @@ def api_proxy(subpath):
                     json_data=json_data,
                     params=params,
                     is_stream=True,
-                    auth=flask.request.headers.get('Authorization') if check_token(flask.request.headers.get('Authorization')) else None
+                    auth=flask.request.headers.get('Authorization') if check_token(flask.request.headers.get('Authorization')) else None,
+                    ip=flask.request.remote_addr
                 )
             return flask.Response(
                 lines,
@@ -277,7 +278,8 @@ def api_proxy(subpath):
                     json_data=json_data,
                     params=params,
                     is_stream=False,
-                    auth=flask.request.headers.get('Authorization') if check_token(flask.request.headers.get('Authorization')) else None
+                    auth=flask.request.headers.get('Authorization') if check_token(flask.request.headers.get('Authorization')) else None,
+                    ip=flask.request.remote_addr
                 )
                 return prox_resp
 

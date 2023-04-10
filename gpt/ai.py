@@ -136,8 +136,16 @@ def proxy_stream(resp):
                     yield f'{line}\n\n'
     return resp.status_code, generate_lines()
 
+def add_ip_tokens(ip, num_tokens):
+    with open('iptokens.json', 'r') as tokens_file:
+        tokens = json.load(tokens_file)
+    if not tokens.get(ip):
+        tokens[ip] = 0
+    tokens[ip] += num_tokens
+    with open('iptokens.json', 'w') as tokens_out_file:
+        json.dump(tokens, tokens_out_file)
 
-def proxy_api(method, content, path, json_data, params, is_stream: bool=False, files=None, auth=None):
+def proxy_api(method, content, path, json_data, params, is_stream: bool=False, files=None, auth=None, ip=None):
     """Makes a request to the official API"""
     actual_path = path.replace('v1/', '')
 
@@ -222,8 +230,14 @@ def proxy_api(method, content, path, json_data, params, is_stream: bool=False, f
                                 add_usage(auth, respjs['usage']['prompt_tokens'], respjs['usage']['completion_tokens'])
                         elif matcheschat:
                             add_tokens('chat', respjs['usage']['total_tokens'])
+                            if ip:
+                                print(respjs['usage']['total_tokens'])
+                                print(ip)
+                                add_ip_tokens(ip, respjs['usage']['total_tokens'])
                         else:
                             add_tokens('text', respjs['usage']['total_tokens'])
+                            if ip:
+                                add_ip_tokens(ip, respjs['usage']['total_tokens'])
 
             resp = Response(resp.content, resp.status_code)
             return resp
