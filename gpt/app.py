@@ -213,6 +213,7 @@ def api_proxy(subpath):
     content = flask.request.data
     json_data = flask.request.get_json(silent=True)
     is_stream = json_data.get('stream', False) if json_data else False
+    ip_address = flask.request.headers.get('CF-Connecting-IP', flask.request.remote_addr)
 
     try:
         # check if model is gpt-4
@@ -233,7 +234,7 @@ def api_proxy(subpath):
                     params=params,
                     is_stream=True,
                     auth=flask.request.headers.get('Authorization') if check_token(flask.request.headers.get('Authorization')) else None,
-                    ip=flask.request.remote_addr
+                    ip=ip_address
                 )
             return flask.Response(
                 lines,
@@ -279,7 +280,7 @@ def api_proxy(subpath):
                     params=params,
                     is_stream=False,
                     auth=flask.request.headers.get('Authorization') if check_token(flask.request.headers.get('Authorization')) else None,
-                    ip=flask.request.remote_addr
+                    ip=ip_address
                 )
                 return prox_resp
 
