@@ -123,9 +123,9 @@ def whitelist_ip(ip):
     ''' Add or remove an IP from the whitelist '''
     if (flask.request.headers.get('Authorization') == os.getenv('BLOCK_AUTH')):
         result = 'error: unknown method'
-        if request.method == 'PUT':
+        if flask.request.method == 'PUT':
             result = 'Added.  {} entries in the whitelist'.format(ip_ban.ip_whitelist_add(ip))
-        elif request.method == 'DELETE':
+        elif flask.request.method == 'DELETE':
             result = '{} removed'.format(ip) if ip_ban.ip_whitelist_remove(ip) else '{} not in whitelist'.format(ip)
         return result
     else:
