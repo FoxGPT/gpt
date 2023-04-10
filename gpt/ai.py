@@ -144,7 +144,7 @@ def add_ip_tokens(ip, num_tokens):
     tokens[ip]["tokens"] += num_tokens
     tokens[ip]["requests"] += 1
     with open('iptokens.json', 'w') as tokens_out_file:
-        json.dump(tokens, tokens_out_file)
+        json.dump(tokens, tokens_out_file, separators=(',', ':'))
 
 def proxy_api(method, content, path, json_data, params, is_stream: bool=False, files=None, auth=None, ip=None):
     """Makes a request to the official API"""
