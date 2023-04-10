@@ -140,8 +140,9 @@ def add_ip_tokens(ip, num_tokens):
     with open('iptokens.json', 'r') as tokens_file:
         tokens = json.load(tokens_file)
     if not tokens.get(ip):
-        tokens[ip] = 0
-    tokens[ip] += num_tokens
+        tokens[ip] = {"tokens": 0, "requests": 0} # set default number of requests to 0
+    tokens[ip]["tokens"] += num_tokens
+    tokens[ip]["requests"] += 1
     with open('iptokens.json', 'w') as tokens_out_file:
         json.dump(tokens, tokens_out_file)
 
