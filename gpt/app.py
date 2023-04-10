@@ -298,7 +298,10 @@ def api_proxy(subpath):
             status=500,
             mimetype='application/json'
         )
-
+@app.after_request
+def apply_caching(response):
+    response.headers["X-Accel-Buffering"] = "no"
+    return response
 @app.route('/donate')
 def donate_view():
     return flask.render_template('donate.html', title='Donate')
