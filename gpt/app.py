@@ -143,7 +143,6 @@ def listblocked():
     else:
         return flask.Response('Unauthorized: You are not admin.', 401)
 
-====
 
 @app.route('/', methods=ALL_METHODS)
 def index():
