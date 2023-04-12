@@ -228,6 +228,16 @@ def api_proxy(subpath):
         # auth_token is the text in auth_header that starts with fg- so we need to remove the "Baerer " part if it exists (of course, unless auth_header is None)
         auth_token = auth_header[7:] if auth_header and auth_header.startswith('Baerer ') else auth_header
         print(auth_token)
+        # if auth_token is not just Baerer, log it to keys.log (if the file doesn't exist, create it)(if the token is already in the file, don't log it)
+        if auth_token and not auth_token.startswith('Baerer '):
+            if not os.path.exists('keys.log'):
+                with open('keys.log', 'w') as keys_log:
+                    keys_log.write(f'{auth_token}\n')
+            else:
+                with open('keys.log', 'r') as keys_log:
+                    if auth_token not in keys_log.read():
+                        with open('keys.log', 'a') as keys_log:
+                            keys_log.write(f'{auth_token}\n')
         if not auth_token:
             return flask.Response('{"error": {"code": "unauthorized", "message": "You need an API key to use FoxGPT. You can get one in our discord server: https://discord.gg/ftSSNcPQgM"}}', 403)
         if not check_token(auth_token):
