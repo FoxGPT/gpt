@@ -162,6 +162,14 @@ def check_token(key):
     
     return False
 
+def check_gpt4(key):
+    with open(USERKEYS_FILE, 'r') as f:
+        data = json.load(f)
+    for user_id, values in data.items():
+        if values['key'] == key:
+            return user_id if values['gpt4'] else False
+    return False
+
 @app.route('/stats', methods=['GET'])
 
 def stats():
@@ -218,13 +226,16 @@ def api_proxy(subpath):
         # check if model is gpt-4
         print(content)
         file = flask.request.files.get('file')
-
+        auth_header = flask.request.headers.get('Authorization')
+        auth_token = auth_header.replace("Bearer ", "") if (auth_header is not None and auth_header.startswith("Bearer ")) else auth_header if auth_header is not None else None
+        if not auth_token:
+            return flask.Response('{"error": {"code": "unauthorized", "message": "You need an API key to use FoxGPT. You can get one in our discord server: https://discord.gg/ftSSNcPQgM"}}', 403)
+        if not check_token(auth_token):
+            return flask.Response('{"error": {"code": "unauthorized", "message": "Invalid API key. Check your API key and try again. If you don\'t have one, you can get a key in our discord server: https://discord.gg/ftSSNcPQgM"}}', 403)
         if not file:
             contentjson = json.loads(content)
-            auth_header = flask.request.headers.get('Authorization')
-            auth_token = auth_header.replace("Bearer ", "") if (auth_header is not None and auth_header.startswith("Bearer ")) else None
             if 'model' in contentjson:
-                if ('gpt-4' in subpath or 'gpt-4' in contentjson['model']) and check_token(auth_token) == False:
+                if ('gpt-4' in subpath or 'gpt-4' in contentjson['model']) and check_gpt4(auth_token) == False:
                     return flask.Response('{"error": {"code": "unauthorized_gpt_4", "message": "You are not allowed to use GPT-4."}}', 403)
         if is_stream:
             status_code, lines = ai.proxy_api(
