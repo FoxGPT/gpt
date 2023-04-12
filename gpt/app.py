@@ -225,7 +225,8 @@ def api_proxy(subpath):
     try:
         file = flask.request.files.get('file')
         auth_header = flask.request.headers.get('Authorization')
-        auth_token = auth_header.replace("Bearer ", "") if (auth_header is not None and auth_header.startswith("Bearer ")) else auth_header if auth_header is not None else None
+        # auth_token is the text in auth_header that starts with fg- so we need to remove the "Baerer " part if it exists (of course, unless auth_header is None)
+        auth_token = auth_header[7:] if auth_header and auth_header.startswith('Baerer ') else auth_header
         print(auth_token)
         if not auth_token:
             return flask.Response('{"error": {"code": "unauthorized", "message": "You need an API key to use FoxGPT. You can get one in our discord server: https://discord.gg/ftSSNcPQgM"}}', 403)
@@ -236,6 +237,15 @@ def api_proxy(subpath):
             if 'model' in contentjson:
                 if ('gpt-4' in subpath or 'gpt-4' in contentjson['model']) and check_gpt4(auth_token) == False:
                     return flask.Response('{"error": {"code": "unauthorized_gpt_4", "message": "You are not allowed to use GPT-4."}}', 403)
+        # count requests for each auth token in requests.json
+        with open('tokens.json', 'r') as f:
+            tokens = json.load(f)
+        if auth_token in tokens:
+            tokens[auth_token] += 1
+        else:
+            tokens[auth_token] = 1
+        with open('tokens.json', 'w') as f:
+            json.dump(tokens, f)
         if is_stream:
             status_code, lines = ai.proxy_api(
                     method=method,
