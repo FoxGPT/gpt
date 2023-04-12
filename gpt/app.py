@@ -223,11 +223,10 @@ def api_proxy(subpath):
     ip_address = flask.request.headers.get('CF-Connecting-IP', flask.request.remote_addr)
 
     try:
-        # check if model is gpt-4
-        print(content)
         file = flask.request.files.get('file')
         auth_header = flask.request.headers.get('Authorization')
         auth_token = auth_header.replace("Bearer ", "") if (auth_header is not None and auth_header.startswith("Bearer ")) else auth_header if auth_header is not None else None
+        print(auth_token)
         if not auth_token:
             return flask.Response('{"error": {"code": "unauthorized", "message": "You need an API key to use FoxGPT. You can get one in our discord server: https://discord.gg/ftSSNcPQgM"}}', 403)
         if not check_token(auth_token):
