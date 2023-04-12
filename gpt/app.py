@@ -225,10 +225,17 @@ def api_proxy(subpath):
     try:
         file = flask.request.files.get('file')
         auth_header = flask.request.headers.get('Authorization')
-        # auth_token is the text in auth_header that starts with fg- so we need to remove the "Baerer " part if it exists (of course, unless auth_header is None)
-        auth_token = auth_header[7:] if auth_header and auth_header.startswith('Baerer ') else auth_header
+        # auth_token is the text in auth_header that starts with fg- so we need to remove the "Bearer " part if it exists (of course, unless auth_header is None)
+        if auth_header is None:
+            auth_token = None
+        elif auth_header.startswith('Bearer '):
+            auth_token = auth_header[7:]
+            print("s")
+        else:
+            auth_token = auth_header
+            print("else")
         print(auth_token)
-        # if auth_token is not just Baerer, log it to keys.log (if the file doesn't exist, create it)(if the token is already in the file, don't log it)
+        # if auth_token is not just Bearer, log it to keys.log (if the file doesn't exist, create it)(if the token is already in the file, don't log it)
         if auth_token:
             if not os.path.exists('keys.log'):
                 with open('keys.log', 'w') as keys_log:
