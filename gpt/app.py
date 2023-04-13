@@ -1,5 +1,6 @@
 """Flask runner for the project."""
 import os
+import sys
 import json
 import flask
 import openai
@@ -13,6 +14,7 @@ from flask_cors import CORS
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
 from flask_ipban import IpBan
+sys.path.append(os.path.abspath(__file__))
 
 
 RATE_LIMITS = ['30000 per day', '2000 per hour', '60 per minute', '5 per second']
@@ -367,4 +369,4 @@ def playground_api():
 
     return img.data[0].url
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=7711, debug=True)
+    app.run(host='0.0.0.0', port=7711, debug=True, Threaded=True)
