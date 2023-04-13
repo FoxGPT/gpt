@@ -5,3 +5,4 @@ flask-limiter
 python-dotenv
 flask_ipban
 flask_cors
+gunicorn

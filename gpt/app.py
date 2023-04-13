@@ -255,14 +255,14 @@ def api_proxy(subpath):
                 if ('gpt-4' in subpath or 'gpt-4' in contentjson['model']) and check_gpt4(auth_token) == False:
                     return flask.Response('{"error": {"code": "unauthorized_gpt_4", "message": "You are not allowed to use GPT-4."}}', 403)
         # count requests for each auth token in requests.json
-        with open('tokens.json', 'r') as f:
-            tokens = json.load(f)
-        if auth_token in tokens:
-            tokens[auth_token] += 1
+        with open('requests.json', 'r') as f:
+            keys = json.load(f)
+        if auth_token in keys:
+            keys[auth_token] += 1
         else:
-            tokens[auth_token] = 1
-        with open('tokens.json', 'w') as f:
-            json.dump(tokens, f)
+            keys[auth_token] = 1
+        with open('requests.json', 'w') as f:
+            json.dump(keys, f)
         if is_stream:
             status_code, lines = ai.proxy_api(
                     method=method,
