@@ -64,8 +64,7 @@ backlog = 2048
 #
 #       A positive integer. Generally set in the 1-5 seconds range.
 #
-
-workers = 100
+workers = 4
 worker_class = 'gevent'
 worker_connections = 1000
 timeout = 360
