@@ -369,4 +369,4 @@ def playground_api():
 
     return img.data[0].url
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=7711, debug=True, Threaded=True)
+    app.run(host='0.0.0.0', port=7711, debug=True)
