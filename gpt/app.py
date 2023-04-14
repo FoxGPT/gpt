@@ -358,7 +358,8 @@ def playground_api():
     if not prompt:
         return flask.Response(status=400)
 
-    openai.api_key = ''
+     #from the .env file
+    openai.api_key = os.getenv('PLAYGROUND_KEY')
     openai.api_base = "https://api.hypere.app"
 
     img = openai.Image.create(

@@ -45,16 +45,25 @@ def get_key() -> str:
 
     while True:
         key = random.choice(keys)
+        locked = True
+        while locked:
+            if check_lock(key):
+                key = random.choice(keys)
+            else:
+                print(f'{key} is not locked!')
+                locked = False
+        lock_key(key)
         return key
 def get_key_gpt4() -> str:
     """Get a random key from the working file."""
     with open(GPT4_FILE, encoding='utf8') as keys_file:
         keys = keys_file.read().splitlines()
-
+    print("shit")
     while True:
         key = random.choice(keys)
         return key
 def invalidate_key(invalid_key: str) -> None:
+
     """Moves an invalid key to another file for invalid keys."""
     with open(WORKING_FILE, 'r') as source:
         lines = source.read().splitlines()
@@ -82,6 +91,26 @@ def invalidate_key(invalid_key: str) -> None:
                 newline = '\n' if line_count else '' 
                 working2.write(f'{newline}{line}')
                 line_count += 1
+
+def lock_key(key:str):
+    """Lock a key in a .lock file so that it can't be used for another request at the same time."""
+    with open(f'locks/{key}.lock', 'w') as lock_file:
+        lock_file.write('locked')
+        print(f'Locked {key}!')
+
+def unlock_key(key:str):
+    """Unlock a key in a .lock file so that it can be used for another request. if the file doesn't exist, ignore it."""
+    try:
+        os.remove(f'locks/{key}.lock')
+    # catch error if file doesn't exist.
+    except FileNotFoundError:
+        pass
+
+
+def check_lock(key:str) -> bool:
+    """Check if a key is locked."""
+    return os.path.exists(f'locks/{key}.lock')
+
 def add_stat(key: str, num = 1):
     """Add +1 to the specified statistic"""
     with open('stats.json', 'r') as stats_file:
@@ -176,7 +205,6 @@ def proxy_api(method, content, path, json_data, params, is_stream: bool=False, f
 
         try:
             if files:
-                print("hi")
                 resp = requests.post(f'https://api.openai.com/v1/{actual_path}', headers={
                         'Authorization': f'Bearer {key}',
                 }, files=files, params=params, timeout=360)
@@ -195,18 +223,19 @@ def proxy_api(method, content, path, json_data, params, is_stream: bool=False, f
                     timeout=360,
                     stream=is_stream
                 )
-                print(resp)
 
 
         except NotADirectoryError:
             continue
 
         if is_stream:
+            unlock_key(key)
             return proxy_stream(resp)
  
         else:
-            respjs = resp.json()
+            unlock_key(key)
 
+            respjs = resp.json()
             if respjs.get('error'):
                 if respjs['error']['code'] == 'invalid_api_key' or 'exceeded' in respjs['error']['message'] or respjs['error']['code'] == 'account_deactivated' or 'Your account is not active' in respjs['error']['message']:
                     invalidate_key(key)
