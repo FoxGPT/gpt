@@ -4,6 +4,7 @@
 fetch('https://api.hypere.app/engines/text-davinci-003/completions', {
   method: 'POST',
   headers: {
+    'Authorization': 'KEY HERE',
     'Content-Type': 'application/json'
   },
   // body: '{\n      "prompt": "Roses are red, "\n   }',
