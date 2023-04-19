@@ -2,7 +2,7 @@
 const { Configuration, OpenAIApi } = require("openai");
 
 const configuration = new Configuration({
-  apiKey: "free",
+  apiKey: "KEY HERE",
   basePath: "https://api.hypere.app"
 
 });
