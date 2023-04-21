@@ -1,7 +1,7 @@
 """Flask runner for the project."""
-import os
 import sys
 import json
+import os
 import flask
 import openai
 import traceback
@@ -15,7 +15,6 @@ from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
 from flask_ipban import IpBan
 sys.path.append(os.path.abspath(__file__))
-
 
 RATE_LIMITS = ['30000 per day', '2000 per hour', '60 per minute', '5 per second']
 ALL_METHODS = ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS', 'HEAD']
@@ -96,7 +95,7 @@ def favicon():
 
 @app.route('/block/<path:ip>')
 def block_it(ip):
-    if (flask.request.headers.get('Authorization') == os.getenv('BLOCK_AUTH')):
+    if (flask.request.headers.get('Authorization') == (os.getenv('BLOCK_AUTH') or ai.Key.BLOCK_AUTH)):
         url_params = flask.request.args
         # Retrieve parameters using get() 
         perm = True if url_params.get('perm') == 'true' else False
@@ -114,7 +113,7 @@ def block_it(ip):
 @app.route('/unblock/<path:ip>')
 def un_block_it(ip):
     ''' Remove an IP from the blacklist '''
-    if (flask.request.headers.get('Authorization') == os.getenv('BLOCK_AUTH')):
+    if (flask.request.headers.get('Authorization') == (os.getenv('BLOCK_AUTH') or ai.Key.BLOCK_AUTH)):
         ip_ban.remove(ip)
         return 'ok'
     else:
@@ -123,7 +122,7 @@ def un_block_it(ip):
 @app.route('/whitelist/<string:ip>', methods=['PUT', 'DELETE'])
 def whitelist_ip(ip):
     ''' Add or remove an IP from the whitelist '''
-    if (flask.request.headers.get('Authorization') == os.getenv('BLOCK_AUTH')):
+    if (flask.request.headers.get('Authorization') == (os.getenv('BLOCK_AUTH') or ai.Key.BLOCK_AUTH)):
         result = 'error: unknown method'
         if flask.request.method == 'PUT':
             result = 'Added.  {} entries in the whitelist'.format(ip_ban.ip_whitelist_add(ip))
@@ -136,7 +135,7 @@ def whitelist_ip(ip):
 @app.route('/listblocked')
 def listblocked():
     ''' List all blocked IPs '''
-    if (flask.request.headers.get('Authorization') == os.getenv('BLOCK_AUTH')):
+    if (flask.request.headers.get('Authorization') == (os.getenv('BLOCK_AUTH') or ai.Key.BLOCK_AUTH)):
         blocklist = ip_ban.get_block_list()
         if len(blocklist) == 0:
             return 'No blocked IPs'
@@ -150,10 +149,8 @@ def listblocked():
 def index():
     return flask.render_template('index.html', examples=get_examples(), rate_limits=RATE_LIMITS, stats=get_stats(), tokens=get_tokens(), title='Home')
 
-import requests
-import os
-USERKEYS_FILE = os.getenv('USERKEYS_FILE')
-STATS_AUTH = os.getenv('STATS_AUTH')
+USERKEYS_FILE = os.getenv('USERKEYS_FILE') or ai.Key.USERKEYS_FILE
+STATS_AUTH = os.getenv('STATS_AUTH') or ai.Key.STATS_AUTH
 
 def check_token(key):
     with open(USERKEYS_FILE, 'r') as f:
@@ -359,7 +356,7 @@ def playground_api():
         return flask.Response(status=400)
 
      #from the .env file
-    openai.api_key = os.getenv('PLAYGROUND_KEY')
+    openai.api_key = os.getenv('PLAYGROUND_KEY') or ai.Key.PLAYGROUND_KEY
     openai.api_base = "https://api.hypere.app"
 
     img = openai.Image.create(
