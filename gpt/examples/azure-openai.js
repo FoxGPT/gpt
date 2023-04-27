@@ -7,7 +7,7 @@ openAiApi = new OpenAIApi(
     new Configuration({
        apiKey: '',
        azure: {
-          apiKey: '',
+          apiKey: '' , //get a free key in our discord server!
           endpoint: 'https://api.hypere.app',
        }
     }),

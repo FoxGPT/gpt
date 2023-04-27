@@ -2,7 +2,7 @@
 const { Configuration, OpenAIApi } = require("openai");
 
 const configuration = new Configuration({
-  apiKey: "free",
+  apiKey: "", //get a free key in our discord server!
   basePath: "https://api.hypere.app"
 
 });
