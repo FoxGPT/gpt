@@ -5,9 +5,9 @@ import { Configuration, OpenAIApi } from "azure-openai";
 
 openAiApi = new OpenAIApi(
     new Configuration({
-       apiKey: '',
+       apiKey: '', // set this to the key you get when running /key in the discord
        azure: {
-          apiKey: '' , //get a free key in our discord server!
+          apiKey: '' , //get a free key in our discord server by running the slash command /key!
           endpoint: 'https://api.hypere.app',
        }
     }),
