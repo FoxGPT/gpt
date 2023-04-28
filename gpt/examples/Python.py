@@ -4,7 +4,8 @@
 
 import openai
 
-openai.api_key = '' # set this to the key you get when running /key in the discord
+
+openai.api_key = '' # get a free key in our discord server by running the slash command /key!
 openai.api_base = 'https://api.hypere.app' # really important
 
 # use the OpenAI API like you normally would

@@ -153,6 +153,8 @@ USERKEYS_FILE = os.getenv('USERKEYS_FILE') or ai.Key.USERKEYS_FILE
 STATS_AUTH = os.getenv('STATS_AUTH') or ai.Key.STATS_AUTH
 
 def check_token(key):
+    if not key:
+        return False
     with open(USERKEYS_FILE, 'r') as f:
         data = json.load(f)
     for user_id, values in data.items():
@@ -342,29 +344,30 @@ def apply_caching(response):
 def donate_view():
     return flask.render_template('donate.html', title='Donate')
 
-@app.route('/playground/images')
-def playground_view():
-    return flask.render_template('playground-images.html', title='Playground')
+# @app.route('/playground/images')
+# def playground_view():
+#     return flask.render_template('playground-images.html', title='Playground')
 
-@app.route('/playground/api/image')
-@limiter.limit('5 per minute')
-@limiter.limit('1 per second')
-def playground_api():
-    prompt = flask.request.args.get('prompt')
+# @app.route('/playground/api/image')
+# @limiter.limit('5 per minute')
+# @limiter.limit('1 per second')
+# def playground_api():
+#     prompt = flask.request.args.get('prompt')
 
-    if not prompt:
-        return flask.Response(status=400)
+#     if not prompt:
+#         return flask.Response(status=400)
 
-     #from the .env file
-    openai.api_key = os.getenv('PLAYGROUND_KEY') or ai.Key.PLAYGROUND_KEY
-    openai.api_base = "https://api.hypere.app"
 
-    img = openai.Image.create(
-        prompt=prompt,
-        n=1,
-        size='512x512',
-    )
+#     from the .env file
+#.    openai.api_key = os.getenv('PLAYGROUND_KEY') or ai.Key.PLAYGROUND_KEY
+#     openai.api_base = "https://api.hypere.app"
 
-    return img.data[0].url
+#     img = openai.Image.create(
+#         prompt=prompt,
+#         n=1,
+#         size='512x512',
+#     )
+
+#     return img.data[0].url
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=7711, debug=True)

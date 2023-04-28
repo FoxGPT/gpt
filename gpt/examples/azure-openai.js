@@ -7,7 +7,7 @@ openAiApi = new OpenAIApi(
     new Configuration({
        apiKey: '', // set this to the key you get when running /key in the discord
        azure: {
-          apiKey: '', 
+          apiKey: '' , //get a free key in our discord server by running the slash command /key!
           endpoint: 'https://api.hypere.app',
        }
     }),

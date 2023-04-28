@@ -4,8 +4,8 @@
 fetch('https://api.hypere.app/engines/text-davinci-003/completions', {
   method: 'POST',
   headers: {
-    'Authorization': 'KEY HERE',
-    'Content-Type': 'application/json'
+    'Content-Type': 'application/json',
+    'Authorization': 'Bearer ' //get a free key in our discord server by running the slash command /key!
   },
   // body: '{\n      "prompt": "Roses are red, "\n   }',
   body: JSON.stringify({
