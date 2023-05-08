@@ -17,7 +17,7 @@ from flask_ipban import IpBan
 sys.path.append(os.path.abspath(__file__))
 
 
-RATE_LIMITS = ['30000 per day', '2000 per hour', '60 per minute', '5 per second']
+RATE_LIMITS = ['30000 per day', '2000 per hour', '45 per minute', '2 per second']
 ALL_METHODS = ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS', 'HEAD']
 
 load_dotenv()
