@@ -6,7 +6,7 @@ import re
 from dotenv import load_dotenv
 load_dotenv()
 from flask import Flask,request,redirect,Response
-
+import gpt4free
 # In the file defined as "WORKING_FILE", you should have a list of OpenAI API keys, one per line.
 # Not all of them have to be valid, but it will make the script run faster.
 # The more, the better.
@@ -113,15 +113,21 @@ def check_lock(key:str) -> bool:
 
 def add_stat(key: str, num = 1):
     """Add +1 to the specified statistic"""
-    with open('stats.json', 'r') as stats_file:
-        stats = json.loads(stats_file.read())
+    with open('stats.json', 'r+') as stats_file:
+        # Lock the file
+        with os.flock(stats_file.fileno(), os.LOCK_EX):
+            # Read the current stats
+            stats = json.loads(stats_file.read())
 
-    with open('stats.json', 'w') as stats_file:
-        if not stats.get(key):
-            stats[key] = 0
+            # If the key does not exist, create it
+            if not stats.get(key):
+                stats[key] = 0
 
-        stats[key] += num
-        json.dump(stats, stats_file)
+            # Add the number to the stat
+            stats[key] += num
+
+            # Write the updated stats back to the file
+            json.dump(stats, stats_file)
 def add_tokens(key: str, tokensnum: int):
     """Add +1 to the specified statistic"""
     with open('tokens.json', 'r') as tokens_file:
@@ -171,6 +177,7 @@ def add_ip_tokens(ip, num_tokens):
     with open('iptokens.json', 'w') as tokens_out_file:
         json.dump(tokens, tokens_out_file, separators=(',', ':'))
 
+
 def proxy_api(method, content, path, json_data, params, is_stream: bool=False, files=None, auth=None, ip=None):
     """Makes a request to the official API"""
     actual_path = path.replace('v1/', '')
@@ -209,6 +216,7 @@ def proxy_api(method, content, path, json_data, params, is_stream: bool=False, f
                         'Authorization': f'Bearer {key}',
                 }, files=files, params=params, timeout=360)
             else:
+
                 resp = requests.request(
                     method=method,
                     url=f'https://api.openai.com/v1/{actual_path}', 
@@ -265,3 +273,5 @@ def proxy_api(method, content, path, json_data, params, is_stream: bool=False, f
 
             resp = Response(resp.content, resp.status_code)
             return resp
+
+
