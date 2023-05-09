@@ -7,6 +7,7 @@ from dotenv import load_dotenv
 load_dotenv()
 from flask import Flask,request,redirect,Response
 import gpt4free
+import fcntl
 # In the file defined as "WORKING_FILE", you should have a list of OpenAI API keys, one per line.
 # Not all of them have to be valid, but it will make the script run faster.
 # The more, the better.
@@ -111,23 +112,23 @@ def check_lock(key:str) -> bool:
     """Check if a key is locked."""
     return os.path.exists(f'locks/{key}.lock')
 
+
 def add_stat(key: str, num = 1):
     """Add +1 to the specified statistic"""
-    with open('stats.json', 'r+') as stats_file:
-        # Lock the file
-        with os.flock(stats_file.fileno(), os.LOCK_EX):
-            # Read the current stats
-            stats = json.loads(stats_file.read())
+    with open('stats.json', 'r') as stats_file:
+        fcntl.flock(stats_file, fcntl.LOCK_EX)  # acquire a lock on the file
+        stats = json.loads(stats_file.read())
 
-            # If the key does not exist, create it
-            if not stats.get(key):
-                stats[key] = 0
+    with open('stats.json', 'w') as stats_file:
+        if not stats.get(key):
+            stats[key] = 0
 
-            # Add the number to the stat
-            stats[key] += num
+        stats[key] += num
+        json.dump(stats, stats_file)
 
-            # Write the updated stats back to the file
-            json.dump(stats, stats_file)
+        fcntl.flock(stats_file, fcntl.LOCK_UN)  # release the lock
+
+
 def add_tokens(key: str, tokensnum: int):
     """Add +1 to the specified statistic"""
     with open('tokens.json', 'r') as tokens_file:
