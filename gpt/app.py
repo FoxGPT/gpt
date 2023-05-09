@@ -1,5 +1,5 @@
 """Flask runner for the project."""
-import os
+import os, shutil
 import sys
 import json
 import flask
@@ -175,7 +175,6 @@ def check_gpt4(key):
     return False
 
 @app.route('/stats', methods=['GET'])
-
 def stats():
     if flask.request.headers.get('Authorization') == STATS_AUTH:
         tokens = json.load(open('tokens.json'))
@@ -195,6 +194,26 @@ def stats():
         return jsonify(response_data)
     else:
         return 'unauthorized', 401
+
+
+@app.route('/unlock', methods=['GET'])
+def unlock():
+    if flask.request.headers.get('Authorization') == STATS_AUTH:
+        folder = 'locks'
+        for filename in os.listdir(folder):
+            file_path = os.path.join(folder, filename)
+            try:
+                if os.path.isfile(file_path) or os.path.islink(file_path):
+                    os.unlink(file_path)
+                elif os.path.isdir(file_path):
+                    shutil.rmtree(file_path)
+            except Exception as e:
+                print('Failed to delete %s. Reason: %s' % (file_path, e))
+        return 'ok'
+    else:
+        return 'unauthorized', 401
+
+
 
 @app.route('/<path:subpath>', methods=['OPTIONS'])
 def handle_options(subpath):
