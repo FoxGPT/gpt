@@ -30,4 +30,4 @@ Website design inspired by:
 - [Vanced](https://vancedapp.com/)
 
 ## Star History
-[![Star History Chart](https://api.star-history.com/svg?repos=Luna-OSS/awesome-free-chatgpt,FoxGPT/gpt&type=Date)](https://star-history.com/#Luna-OSS/awesome-free-chatgpt&FoxGPT/gpt&Date)
+[![Star History Chart](https://api.star-history.com/svg?repos=FoxGPT/gpt&type=Date)](https://star-history.com/#FoxGPT/gpt&Date)
