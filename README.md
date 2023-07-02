@@ -28,3 +28,6 @@ python3 gpt/app.py
 Website design inspired by:
 - [Vercel](https://vercel.com)
 - [Vanced](https://vancedapp.com/)
+
+## Star History
+[![Star History Chart](https://api.star-history.com/svg?repos=FoxGPT/gpt&type=Date)](https://star-history.com/#FoxGPT/gpt&Date)
